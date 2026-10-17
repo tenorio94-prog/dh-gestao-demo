@@ -50,6 +50,14 @@ Auditoria sob 5 ângulos (produto, visual, UX, acessibilidade, engenharia). Deci
 - **lucide-react:** já em uso.
 - Pesquisa feita pelo Haiku (somente leitura); implementações de escopo fechado, pelo Codex (Sol medium); portões rodados pelo Claude.
 
+## Rodada de conversão (2026-10-17, skill revenue-centric-design)
+Plano em `PLANO-CONVERSAO.md`. Decisões do usuário: **a indústria (Marcos) paga ou patrocina e o lava jato usa de graça** (hipótese principal, ainda a confirmar com o Marcos); **a dor do título é "produto que acaba"** (refinar depois das conversas com donos de lava jato); **WhatsApp público dos botões: (81) 99947-6189** (`app/src/landing/contact.ts`).
+- **Etapa 1, landing:** título "Seu lava jato fica sem produto no meio do dia? O DH Gestão avisa antes de acabar."; CTAs "Ver com carros de exemplo" + "Falar no WhatsApp" com microtexto (1 minuto, sem cadastro, sem custo); calculadora ganhou "E se o produto faltar?" (lavagens × valor da lavagem × dias parados, fórmula visível, números do usuário) e o botão "Levar essa conta para o WhatsApp" com a mensagem pronta.
+- **Etapa 2, primeiros passos:** na demo, cartão "Quer ver com os dados do seu lava jato?" → escolha da dor (produto, cobrança ou fila) → modo **dados próprios** (`personal` no store: sem exemplos, sem recomeço diário) → cadastro de produto (`ProductSheet`) → primeiro carro → finalizar → cartão de "Deu certo" com o estoque real que baixou e botão "Contar como foi no WhatsApp". Progresso começa em 25% (`domain/onboarding.ts`). Restaurar volta aos exemplos.
+- **Etapa 3, retenção sem backend:** placa já conhecida preenche modelo, cor e WhatsApp e mostra "Cliente conhecido" (`domain/history.ts`); "Meu mês" baixa planilha CSV das lavagens (dados são do dono, ficam só no aparelho).
+- **Não feito de propósito:** medição de visitas (serviço externo, sem autorização), preço público, indicação e backend (esperam validação), roteiro de entrevista (fora do escopo).
+- **Testes:** `npm run check` com 38 unitários e 49 de tela (celular e desktop), incluindo axe nos primeiros passos.
+
 ## Referência visual (Google Stitch)
 Em `stitch_dh_gest_o_car_wash/`: 4 telas (`hoje_lavagens_do_dia`, `novo_agendamento`, `estoque_de_produtos`, `pedir_reposi_o_de_estoque`, cada uma com `screen.png` e `code.html`) e `hydro_fleet_operations/DESIGN.md` (tokens: teal `#006D77`, aqua `#2EC4B6`, coral `#FF6B35`; Plus Jakarta Sans + JetBrains Mono; alvos de toque 48–56 px; chips de status Aguardando/Lavando/Pronto/Pago).
 É **referência**, não identidade final: nome interno "Hydro Fleet Operations", logo minúsculo e fotos geradas são provisórios. Problemas vistos: nomes de produto truncados, resíduo de texto "_RK" no Estoque, números que não fecham entre cards e resumo, título "Novo Item Estoque" na tela de reposição, fornecedores e foto inventados, data fixa 24/10 e card "Clima favorável" que não pedimos.
@@ -73,7 +81,7 @@ Observação: não confirmado que o Codex CLI chamado pelo plugin compartilha as
 - Nome: não verificar disponibilidade (é só projeto, sem comercialização).
 
 ## Pendências
-- Plano de conversão novo em `PLANO-CONVERSAO.md` (skill `revenue-centric-design` instalada em `.claude/skills/`). Aguarda decisões do usuário: quem paga (lava jato, indústria ou híbrido), dor principal e WhatsApp de contato. Nada disso foi implementado.
+- Etapas 1 a 3 do `PLANO-CONVERSAO.md` implementadas (ver "Rodada de conversão"). Falta: confirmar o modelo com o Marcos, 20 conversas com donos de lava jato, decidir a medição de visitas (Cloudflare Web Analytics, grátis) e o roteiro de entrevista.
 - Opcional: testar ImageGen do Codex para ilustrações de estado vazio.
 - Fora de escopo por decisão do usuário: roteiro de entrevista, roteiro de apresentação ao Marcos, orçamento de cota, comparação Sonnet x Opus.
 - Ideias para depois, só se a demo gerar interesse: mais de um produto por serviço com custo, fechamento de caixa, histórico por cliente.

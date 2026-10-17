@@ -1,9 +1,11 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Download } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { addMonths, monthLabel, monthOf, saoPauloDay } from '../domain/dates'
 import { formatBRL, formatLiters } from '../domain/format'
+import { appointmentsCsv } from '../domain/history'
 import { dailySales, monthSummary } from '../domain/rules'
 import { useStore } from '../store/useStore'
+import { Button } from '../ui/Button'
 import { DailySalesChart } from './DailySalesChart'
 
 export function Month() {
@@ -22,6 +24,16 @@ export function Month() {
   const name = (id: string) => services.find((s) => s.id === id)?.name ?? id
   const productName = (id: string) => products.find((p) => p.id === id)?.name ?? id
   const prev = addMonths(month, -1)
+
+  function download() {
+    const blob = new Blob([appointmentsCsv(appointments, services)], { type: 'text/csv;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `dh-gestao-lavagens-${today}.csv`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
 
   return (
     <div className="space-y-4">
@@ -95,6 +107,16 @@ export function Month() {
           </div>
         </>
       )}
+
+      <section className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line">
+        <h2 className="text-lg font-extrabold text-brand-deep">Seus dados são seus</h2>
+        <p className="mt-1 text-muted">
+          Tudo fica salvo só neste aparelho. Baixe uma planilha com todas as lavagens para guardar ou abrir no Excel.
+        </p>
+        <Button variant="soft" className="mt-3 w-full sm:w-auto" onClick={download}>
+          <Download aria-hidden="true" /> Baixar planilha das lavagens
+        </Button>
+      </section>
     </div>
   )
 }

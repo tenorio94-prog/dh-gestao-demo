@@ -1,6 +1,6 @@
 # DH Gestão — Plano de conversão (skill Revenue-Centric Design)
 
-Data: 2026-10-17. Base: skill `revenue-centric-design` (134 princípios do designer Richard, @richardrx), instalada em `.claude/skills/revenue-centric-design/`. Os números dela vêm de SaaS (EUA e Brasil), não de lava jato: servem de **hipótese para testar**, não de promessa.
+Data: 2026-10-17. **Status: etapas 1 a 3 implementadas no mesmo dia (ver `context.md`).** Decisões do usuário: indústria paga ou patrocina (hipótese principal), dor = produto que acaba, WhatsApp (81) 99947-6189. Base: skill `revenue-centric-design` (134 princípios do designer Richard, @richardrx), instalada em `.claude/skills/revenue-centric-design/`. Os números dela vêm de SaaS (EUA e Brasil), não de lava jato: servem de **hipótese para testar**, não de promessa.
 
 ## 1. O diagnóstico em uma frase
 

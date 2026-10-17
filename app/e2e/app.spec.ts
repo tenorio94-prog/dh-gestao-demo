@@ -163,6 +163,15 @@ test.describe('Hoje', () => {
     expect(errors).toEqual([])
   })
 
+  test('placa já conhecida preenche modelo e cor', async ({ page }) => {
+    await open(page)
+    await page.getByRole('button', { name: /Novo agendamento/ }).click()
+    const sheet = page.getByRole('dialog', { name: 'Novo agendamento' })
+    await sheet.getByLabel(/Placa do veículo/).fill('rio4a82')
+    await expect(sheet.getByText(/Cliente conhecido/)).toBeVisible()
+    await expect(sheet.getByLabel('Modelo e cor')).toHaveValue(/Onix/)
+  })
+
   test('os dados persistem ao recarregar e "Restaurar" volta ao exemplo', async ({ page }) => {
     await open(page)
     await page.getByRole('article', { name: /QWE5F67/ }).getByRole('button', { name: /Iniciar lavagem/ }).click()
@@ -231,6 +240,19 @@ test.describe('Estoque', () => {
 })
 
 test.describe('Meu mês', () => {
+  test('baixa a planilha das lavagens', async ({ page }) => {
+    await open(page, 'mes')
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      page.getByRole('button', { name: /Baixar planilha/ }).click(),
+    ])
+    expect(download.suggestedFilename()).toMatch(/^dh-gestao-lavagens-\d{4}-\d{2}-\d{2}\.csv$/)
+    const { readFile } = await import('node:fs/promises')
+    const text = await readFile((await download.path())!, 'utf8')
+    expect(text).toContain('Data;Hora;Placa')
+    expect(text).toContain('RIO4A82')
+  })
+
   test('mostra totais, ranking e consumo; navega para o mês anterior', async ({ page }, info) => {
     const errors = await open(page, 'mes')
     await expect(page.getByRole('term').filter({ hasText: 'Recebido' })).toBeVisible()

@@ -2,6 +2,7 @@ import { Minus, Plus } from 'lucide-react'
 import { useRef, useState, type KeyboardEvent } from 'react'
 import { saoPauloTime } from '../domain/dates'
 import { formatBRL, formatBRLShort, isValidPlate, normalizePlate } from '../domain/format'
+import { visitsOf } from '../domain/history'
 import { useStore } from '../store/useStore'
 import { Button } from '../ui/Button'
 import { PlateBadge } from '../ui/PlateBadge'
@@ -35,6 +36,7 @@ const chip = (active: boolean) =>
 export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
   const services = useStore((s) => s.services)
   const add = useStore((s) => s.addAppointment)
+  const appointments = useStore((s) => s.appointments)
 
   const [plate, setPlate] = useState('')
   const [model, setModel] = useState('')
@@ -49,7 +51,19 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
   const modelRef = useRef<HTMLInputElement>(null)
 
   const plateOk = isValidPlate(plate)
+  const visits = plateOk ? visitsOf(appointments, plate) : null
   const modelOk = model.trim().length > 0
+
+  /** Placa já conhecida: preenche modelo, cor e WhatsApp, sem sobrescrever o que já foi digitado. */
+  function changePlate(raw: string) {
+    const next = normalizePlate(raw)
+    setPlate(next)
+    const known = isValidPlate(next) ? visitsOf(appointments, next) : null
+    if (!known) return
+    if (!model.trim()) setModel(known.last.model)
+    setColor(known.last.color)
+    if (!phone.trim() && known.last.customerPhone) setPhone(known.last.customerPhone)
+  }
 
   function chooseService(id: string) {
     setServiceId(id)
@@ -87,7 +101,7 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
             id="plate"
             ref={plateRef}
             value={plate}
-            onChange={(e) => setPlate(normalizePlate(e.target.value))}
+            onChange={(e) => changePlate(e.target.value)}
             inputMode="text"
             autoCapitalize="characters"
             autoComplete="off"
@@ -100,6 +114,12 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
           <p id="plate-help" className={`mt-2 text-sm ${touched && !plateOk ? 'font-bold text-danger' : 'text-muted'}`}>
             {touched && !plateOk ? 'Digite a placa completa, com 7 letras e números.' : 'Padrão antigo (ABC1234) ou Mercosul (ABC1D23).'}
           </p>
+          {visits && (
+            <p role="status" className="mt-2 rounded-xl bg-aqua-wash px-3 py-2 text-sm font-bold text-brand-deep">
+              Cliente conhecido: {visits.count} {visits.count === 1 ? 'lavagem' : 'lavagens'}, a última em{' '}
+              {visits.last.date.split('-').reverse().slice(0, 2).join('/')}. Modelo e cor já preenchidos.
+            </p>
+          )}
           {plateOk && (
             <div className="mt-2 flex justify-center">
               <PlateBadge plate={plate} large />
