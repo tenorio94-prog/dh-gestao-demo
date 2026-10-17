@@ -23,6 +23,24 @@ Estado em 2026-10-17. Fases 1 a 5 do `PLANO.md` **concluídas e publicadas**.
 | Modelos | Sonnet principal; Opus consultor; Codex Sol medium para tarefas fechadas | Hipótese em teste, ver `AGENTS.md` |
 | Imagens | Referência visual via Google Stitch (prompt já entregue); ilustrações via ChatGPT/Codex só sob pedido | Imagem no Codex gasta o saldo de código |
 
+## Rodada de evolução (2026-10-17, com subagentes)
+Auditoria sob 5 ângulos (produto, visual, UX, acessibilidade, engenharia). Decisões e motivos:
+- **Prioridade operacional na lista de Hoje** (lavando → pronto → aguardando → pago): carro pago às 08:00 empurrava o que pede ação. *Feito pelo Codex.*
+- **"A cobrar" no lugar de "A receber"**: só conta carros prontos e não pagos (o dinheiro em risco); "A receber" somava carros nem lavados. *Codex.*
+- **Estoque com dias restantes em destaque** (número grande), % em segundo plano. *Codex.*
+- **Desfazer** (toast de 7 s) para ação, inclusive a baixa de estoque: toque errado com mão molhada era irreversível. *Claude.*
+- **Folha de baixo com Radix Dialog**: focus trap, Esc, trava de rolagem, ARIA, mais arrastar para fechar. +13,7 KB gzip.
+- **Acessibilidade:** axe-core (WCAG 2.2 AA) em todas as telas e painéis, celular e desktop, sem violações. Teste em `e2e/a11y.spec.ts` (janela alta de propósito: o axe só mede o visível e o painel rolável gerava falso positivo).
+- **Marca:** 4 conceitos gerados pelo Codex (ImageGen) em `app/design/logo-concepts/`; escolhido o **selo** (nº 4: escudo + gota + "DH"), legível em 48 px. `app/scripts/make-icons.mjs` gera favicon, ícones PWA e maskable.
+- **Efeitos com função:** valor que rola ao mudar (confirma a cobrança), borda animada só no carro em lavagem, ondas no cabeçalho. Tudo respeita "reduzir movimento".
+
+### Bibliotecas avaliadas
+- **shadcn/ui:** testado e **revertido**. O `init` sobrescreve a identidade (fonte Geist; variáveis `card`/`muted` colidem com os nossos tokens). Ficamos só com a base dele, o Radix Dialog.
+- **Aceternity UI:** descartada. Licença comercial própria, guia oficial só para Next.js, sem suporte confirmado a Vite.
+- **Magic UI:** MIT (não confirmado no site oficial), mas o que interessava (número que rola, borda animada) saiu em ~40 linhas sem depender de `motion`. Adotamos o padrão, não o pacote.
+- **lucide-react:** já em uso.
+- Pesquisa feita pelo Haiku (somente leitura); implementações de escopo fechado, pelo Codex (Sol medium); portões rodados pelo Claude.
+
 ## Referência visual (Google Stitch)
 Em `stitch_dh_gest_o_car_wash/`: 4 telas (`hoje_lavagens_do_dia`, `novo_agendamento`, `estoque_de_produtos`, `pedir_reposi_o_de_estoque`, cada uma com `screen.png` e `code.html`) e `hydro_fleet_operations/DESIGN.md` (tokens: teal `#006D77`, aqua `#2EC4B6`, coral `#FF6B35`; Plus Jakarta Sans + JetBrains Mono; alvos de toque 48–56 px; chips de status Aguardando/Lavando/Pronto/Pago).
 É **referência**, não identidade final: nome interno "Hydro Fleet Operations", logo minúsculo e fotos geradas são provisórios. Problemas vistos: nomes de produto truncados, resíduo de texto "_RK" no Estoque, números que não fecham entre cards e resumo, título "Novo Item Estoque" na tela de reposição, fornecedores e foto inventados, data fixa 24/10 e card "Clima favorável" que não pedimos.

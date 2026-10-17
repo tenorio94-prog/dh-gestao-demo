@@ -2,11 +2,12 @@ import { Banknote, CheckCircle2, CreditCard, MessageCircle, Play, Plus, QrCode, 
 import { useMemo, useState, type ReactNode } from 'react'
 import { dayLabel, saoPauloDay } from '../domain/dates'
 import { formatBRL, whatsappLink } from '../domain/format'
-import { daySummary } from '../domain/rules'
+import { daySummary, priorityOrder } from '../domain/rules'
 import type { Appointment, PayMethod, Status } from '../domain/types'
 import { useStore } from '../store/useStore'
 import { Button } from '../ui/Button'
 import { PlateBadge } from '../ui/PlateBadge'
+import { Money } from '../ui/Money'
 import { Sheet } from '../ui/Sheet'
 import { STATUS_LABEL } from '../ui/status'
 import { StatusChip } from '../ui/StatusChip'
@@ -34,7 +35,7 @@ export function Today() {
     () =>
       appointments
         .filter((a) => a.date === today && (filter === 'todos' || a.status === filter))
-        .sort((x, y) => x.time.localeCompare(y.time) || x.id.localeCompare(y.id)),
+        .sort(priorityOrder),
     [appointments, today, filter],
   )
   const serviceName = (id: string) => services.find((s) => s.id === id)?.name ?? 'Serviço'
@@ -51,13 +52,13 @@ export function Today() {
   function charge(method: PayMethod) {
     if (!charging) return
     pay(charging.id, method)
-    say(`${charging.plate} pago via ${METHOD_LABEL[method]} · ${formatBRL(charging.valueCents)}`)
     setCharging(null)
   }
 
   return (
     <div className="space-y-4">
-      <section aria-labelledby="day-title" className="rounded-3xl bg-brand-deep p-5 text-white shadow-rest">
+      <section aria-labelledby="day-title" className="relative isolate overflow-hidden rounded-3xl bg-brand-deep p-5 text-white shadow-rest">
+        <Waves />
         <p className="text-sm font-bold text-aqua-soft first-letter:uppercase">{dayLabel(today)}</p>
         <div className="mt-1 flex items-end justify-between gap-3">
           <h1 id="day-title" className="text-3xl font-extrabold">
@@ -65,12 +66,14 @@ export function Today() {
           </h1>
           <div className="text-right">
             <p className="text-xs font-bold uppercase tracking-wide text-aqua-soft">Previsto</p>
-            <p className="text-2xl font-extrabold">{formatBRL(summary.expectedCents)}</p>
+            <p className="text-2xl font-extrabold">
+              <Money cents={summary.expectedCents} />
+            </p>
           </div>
         </div>
         <dl className="mt-4 grid grid-cols-3 gap-2 text-center">
-          <Stat label="Recebido" value={formatBRL(summary.receivedCents)} />
-          <Stat label="A receber" value={formatBRL(summary.pendingCents)} />
+          <Stat label="Recebido" value={<Money cents={summary.receivedCents} />} />
+          <Stat label="A cobrar" value={<Money cents={summary.toCollectCents} />} />
           <Stat label="Em box" value={`${summary.byStatus.lavando}`} />
         </dl>
       </section>
@@ -129,7 +132,7 @@ export function Today() {
         </ul>
       )}
 
-      {creating && <NewAppointmentSheet onClose={() => setCreating(false)} onDone={say} />}
+      {creating && <NewAppointmentSheet onClose={() => setCreating(false)} />}
       {charging && (
         <Sheet title="Cobrar" onClose={() => setCharging(null)}>
           <div className="space-y-4 pb-2">
@@ -156,7 +159,16 @@ export function Today() {
   )
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Waves() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 400 120" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-full w-full opacity-30">
+      <path d="M0 70 C60 40 120 100 200 70 S340 40 400 70 V120 H0 Z" fill="#2ec4b6" opacity="0.35" />
+      <path d="M0 90 C70 65 130 112 210 88 S340 66 400 92 V120 H0 Z" fill="#70f8e8" opacity="0.25" />
+    </svg>
+  )
+}
+
+function Stat({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="rounded-2xl bg-white/10 px-2 py-2">
       <dt className="text-[11px] font-bold uppercase tracking-wide text-aqua-soft">{label}</dt>
@@ -224,7 +236,7 @@ function CarCard({ a, service, onStart, onFinish, onCharge }: CardProps) {
   return (
     <article
       aria-label={`${a.plate}, ${a.model}`}
-      className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line"
+      className={`rounded-3xl bg-card p-4 shadow-rest ${a.status === 'lavando' ? 'beam' : 'ring-1 ring-line'}`}
       data-status={a.status}
     >
       <div className="flex items-start justify-between gap-3">

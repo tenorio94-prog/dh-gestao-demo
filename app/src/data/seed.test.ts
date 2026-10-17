@@ -41,6 +41,7 @@ describe('seed', () => {
     const manual = seed.appointments.filter((a) => a.date === TODAY).reduce((n, a) => n + a.valueCents, 0)
     expect(s.expectedCents).toBe(manual)
     expect(s.receivedCents).toBe(5000)
+    expect(s.toCollectCents).toBe(5000)
   })
 
   it('os alertas de estoque saem como planejado: shampoo e pretinho pedem atenção', () => {

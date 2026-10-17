@@ -103,11 +103,16 @@ function ProductCard({ s, onRestock, onAdjust, onReceive }: CardProps) {
       </div>
       <h2 className="mt-1 text-lg font-extrabold leading-snug text-ink">{product.name}</h2>
 
-      <div className="mt-3 flex items-baseline justify-between">
+      <div className="mt-3 flex items-center justify-between gap-3">
         <span className="text-sm font-semibold text-muted">
-          {style.label} · restam {formatLiters(product.stockMl)}
+          {style.label} · restam {formatLiters(product.stockMl)} · {percent}%
         </span>
-        <span className="text-2xl font-extrabold text-ink">{percent}%</span>
+        <div className="shrink-0 text-right">
+          <span className="text-3xl font-extrabold text-ink">{days ?? '—'}</span>
+          <span className="block text-xs text-muted">
+            {days === null ? 'sem consumo recente' : days === 1 ? 'dia restante' : 'dias restantes'}
+          </span>
+        </div>
       </div>
       <div
         className="mt-1 h-3 overflow-hidden rounded-full bg-line"

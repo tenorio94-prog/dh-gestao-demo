@@ -21,8 +21,8 @@ test.describe('Hoje', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('8 carros')
     const summary = page.locator('section[aria-labelledby="day-title"]')
     await expect(summary).toContainText(money('670,00'))
-    await expect(summary).toContainText(money('50,00'))
-    await expect(summary).toContainText(money('620,00'))
+    const toCollect = summary.getByText('A cobrar', { exact: true }).locator('..')
+    await expect(toCollect).toContainText(money('50,00'))
     await expect(page.getByRole('article')).toHaveCount(8)
     await noHorizontalScroll(page)
     await page.screenshot({ path: `e2e/.shots/hoje-${info.project.name}.png`, fullPage: true })
@@ -42,16 +42,41 @@ test.describe('Hoje', () => {
     await gol.getByRole('button', { name: /Cobrar/ }).click()
     await page.getByRole('dialog', { name: 'Cobrar' }).getByRole('button', { name: /Pix/ }).click()
     await expect(gol).toHaveAttribute('data-status', 'pago')
-    await expect(page.getByRole('status')).toContainText('pago via Pix')
-    await expect(page.locator('section[aria-labelledby="day-title"]')).toContainText(money('100,00'))
+    await expect(page.getByRole('status').filter({ hasText: 'pago via Pix' })).toBeVisible()
+    const received = page.locator('section[aria-labelledby="day-title"]').getByText('Recebido', { exact: true }).locator('..')
+    await expect(received).toContainText(money('100,00'))
+  })
+
+  test('os carros que pedem ação vêm primeiro', async ({ page }) => {
+    await open(page)
+    const cars = page.getByRole('article')
+    await expect(cars.nth(0)).toHaveAttribute('data-status', 'lavando')
+    await expect(cars.nth(1)).toHaveAttribute('data-status', 'lavando')
+    await expect(cars.last()).toHaveAttribute('data-status', 'pago')
   })
 
   test('avisa quando os 3 boxes estão ocupados', async ({ page }) => {
     await open(page)
     await page.getByRole('article', { name: /QWE5F67/ }).getByRole('button', { name: /Iniciar lavagem/ }).click()
     await page.getByRole('article', { name: /PLX9J44/ }).getByRole('button', { name: /Iniciar lavagem/ }).click()
-    await expect(page.getByRole('status')).toContainText('boxes estão ocupados')
+    await expect(page.getByText('Os 3 boxes estão ocupados')).toBeVisible()
     await expect(page.getByRole('article', { name: /PLX9J44/ })).toHaveAttribute('data-status', 'aguardando')
+  })
+
+  test('desfazer reverte a última ação, inclusive a baixa do estoque', async ({ page }) => {
+    await open(page, 'estoque')
+    const level = async () =>
+      page.locator('article', { hasText: 'Shampoo Automotivo Neutro' }).getByRole('progressbar').getAttribute('aria-valuenow')
+    const before = await level()
+    await page.getByRole('link', { name: 'Hoje' }).click()
+    const carro = page.getByRole('article', { name: /BRA2E19/ })
+    await carro.getByRole('button', { name: /Finalizar/ }).click()
+    await expect(carro).toHaveAttribute('data-status', 'pronto')
+    await page.getByRole('button', { name: /Desfazer/ }).click()
+    await expect(carro).toHaveAttribute('data-status', 'lavando')
+    await expect(page.getByRole('button', { name: /Desfazer/ })).toHaveCount(0)
+    await page.getByRole('link', { name: 'Estoque' }).click()
+    expect(await level()).toBe(before)
   })
 
   test('filtra por status e mostra estado vazio', async ({ page }) => {

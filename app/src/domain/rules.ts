@@ -6,6 +6,12 @@ export const CRITICAL_DAYS = 5
 export const ATTENTION_DAYS = 10
 export const BOX_COUNT = 3
 
+const PRIORITY_ORDER: Record<Status, number> = { lavando: 0, pronto: 1, aguardando: 2, pago: 3 }
+
+export function priorityOrder(a: Appointment, b: Appointment): number {
+  return PRIORITY_ORDER[a.status] - PRIORITY_ORDER[b.status] || a.time.localeCompare(b.time) || a.id.localeCompare(b.id)
+}
+
 export function nextStatus(status: Status): Status | null {
   const index = STATUS_ORDER.indexOf(status)
   return index < STATUS_ORDER.length - 1 ? STATUS_ORDER[index + 1] : null
@@ -21,6 +27,7 @@ export interface DaySummary {
   byStatus: Record<Status, number>
   expectedCents: Cents
   receivedCents: Cents
+  toCollectCents: Cents
   pendingCents: Cents
 }
 
@@ -28,6 +35,7 @@ export function daySummary(appointments: Appointment[], date: string): DaySummar
   const byStatus: Record<Status, number> = { aguardando: 0, lavando: 0, pronto: 0, pago: 0 }
   let expectedCents = 0
   let receivedCents = 0
+  let toCollectCents = 0
   let count = 0
   for (const a of appointments) {
     if (a.date !== date) continue
@@ -35,8 +43,9 @@ export function daySummary(appointments: Appointment[], date: string): DaySummar
     byStatus[a.status]++
     expectedCents += a.valueCents
     if (a.status === 'pago') receivedCents += a.valueCents
+    if (a.status === 'pronto') toCollectCents += a.valueCents
   }
-  return { count, byStatus, expectedCents, receivedCents, pendingCents: expectedCents - receivedCents }
+  return { count, byStatus, expectedCents, receivedCents, toCollectCents, pendingCents: expectedCents - receivedCents }
 }
 
 export function nextFreeBox(appointments: Appointment[], date: string): number | null {

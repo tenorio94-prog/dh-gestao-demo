@@ -94,8 +94,10 @@ function Tile({ label, value, note, tone }: { label: string; value: string; note
   return (
     <div className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line">
       <dt className="text-xs font-extrabold uppercase tracking-wide text-muted">{label}</dt>
-      <dd className={`mt-1 text-2xl font-extrabold ${color}`}>{value}</dd>
-      <p className="mt-1 text-xs text-muted">{note}</p>
+      <dd className={`mt-1 text-2xl font-extrabold ${color}`}>
+        {value}
+        <span className="mt-1 block text-xs text-muted">{note}</span>
+      </dd>
     </div>
   )
 }

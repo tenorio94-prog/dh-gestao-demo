@@ -10,6 +10,7 @@ import {
   monthSummary,
   nextFreeBox,
   payAppointment,
+  priorityOrder,
   startWash,
   stockLevel,
   suggestedContainers,
@@ -85,8 +86,38 @@ describe('resumo do dia', () => {
     expect(s.count).toBe(3)
     expect(s.expectedCents).toBe(26500)
     expect(s.receivedCents).toBe(5000)
+    expect(s.toCollectCents).toBe(8500)
     expect(s.pendingCents).toBe(21500)
     expect(s.byStatus).toEqual({ aguardando: 1, lavando: 0, pronto: 1, pago: 1 })
+  })
+
+  it('soma apenas carros prontos do dia, incluindo zero quando não há cobranças', () => {
+    const list = [
+      car({ id: '1', status: 'pronto', valueCents: 2000 }),
+      car({ id: '2', status: 'pronto', valueCents: 3000 }),
+      car({ id: '3', status: 'lavando', valueCents: 4000 }),
+      car({ id: '4', status: 'aguardando', valueCents: 5000 }),
+      car({ id: '5', status: 'pago', valueCents: 6000 }),
+      car({ id: '6', date: '2026-10-16', status: 'pronto', valueCents: 7000 }),
+    ]
+    expect(daySummary(list, '2026-10-17').toCollectCents).toBe(5000)
+    expect(daySummary(list.filter((a) => a.status !== 'pronto'), '2026-10-17').toCollectCents).toBe(0)
+  })
+})
+
+describe('ordenação por prioridade', () => {
+  it('prioriza o estado e desempata por horário e id', () => {
+    const list = [
+      car({ id: 'pago', status: 'pago', time: '08:00' }),
+      car({ id: 'aguardando', status: 'aguardando', time: '08:00' }),
+      car({ id: 'pronto', status: 'pronto', time: '08:00' }),
+      car({ id: 'lavando-b', status: 'lavando', time: '10:00' }),
+      car({ id: 'lavando-z', status: 'lavando', time: '09:00' }),
+      car({ id: 'lavando-a', status: 'lavando', time: '09:00' }),
+    ]
+    expect(list.sort(priorityOrder).map((a) => a.id)).toEqual([
+      'lavando-a', 'lavando-z', 'lavando-b', 'pronto', 'aguardando', 'pago',
+    ])
   })
 })
 

@@ -2,6 +2,7 @@ import { CarFront, ChartColumn, Package, RotateCcw } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useStore } from '../store/useStore'
 import { Logo } from './Logo'
+import { UndoToast } from './UndoToast'
 
 const TABS = [
   { to: '/', label: 'Hoje', Icon: CarFront },
@@ -31,6 +32,7 @@ export function Layout() {
       <main className="flex-1 px-4 pb-28 pt-1">
         <Outlet />
       </main>
+      <UndoToast />
       <nav
         aria-label="Navegação principal"
         className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-card pb-[env(safe-area-inset-bottom)]"

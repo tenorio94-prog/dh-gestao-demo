@@ -20,7 +20,7 @@ const COLORS: { name: string; swatch: string }[] = [
 const chip = (active: boolean) =>
   `min-h-12 rounded-full px-4 text-sm font-bold ${active ? 'bg-brand text-white' : 'bg-card text-ink-soft ring-1 ring-line'}`
 
-export function NewAppointmentSheet({ onClose, onDone }: { onClose: () => void; onDone: (message: string) => void }) {
+export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
   const services = useStore((s) => s.services)
   const add = useStore((s) => s.addAppointment)
 
@@ -61,7 +61,6 @@ export function NewAppointmentSheet({ onClose, onDone }: { onClose: () => void; 
       valueCents,
       customerPhone: phone.trim() || undefined,
     })
-    onDone(`${plate} agendado · ${formatBRL(valueCents)}`)
     onClose()
   }
 

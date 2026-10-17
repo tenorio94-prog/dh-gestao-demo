@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { buildSeed } from '../data/seed'
 import { saoPauloDay } from '../domain/dates'
+import { formatBRL } from '../domain/format'
 import {
   deductStock,
   finishWash as finishAppointment,
@@ -21,17 +22,30 @@ export interface NewAppointment {
   customerPhone?: string
 }
 
+/** Foto do estado antes da última ação, para o botão "Desfazer". */
+export interface UndoEntry {
+  id: number
+  message: string
+  appointments: Appointment[]
+  products: Product[]
+}
+
+const METHOD_LABEL: Record<PayMethod, string> = { pix: 'Pix', cartao: 'Cartão', dinheiro: 'Dinheiro' }
+
 interface State {
   services: Service[]
   products: Product[]
   appointments: Appointment[]
   supplierPhone: string
   seedDate: string
+  undo: UndoEntry | null
   addAppointment: (input: NewAppointment) => void
   /** false quando não há box livre. */
   startWash: (id: string) => boolean
   finishWash: (id: string) => void
   pay: (id: string, method: PayMethod) => void
+  undoLast: () => void
+  dismissUndo: () => void
   setStock: (productId: string, ml: number) => void
   setUsage: (serviceId: string, productId: string, ml: number) => void
   orderRestock: (productId: string, containers: number) => void
@@ -40,7 +54,14 @@ interface State {
   reset: () => void
 }
 
-const fresh = () => buildSeed(saoPauloDay())
+const fresh = () => ({ ...buildSeed(saoPauloDay()), undo: null })
+
+const remember = (s: Pick<State, 'appointments' | 'products'>, message: string): UndoEntry => ({
+  id: Date.now(),
+  message,
+  appointments: s.appointments,
+  products: s.products,
+})
 
 export const useStore = create<State>()(
   persist(
@@ -49,6 +70,7 @@ export const useStore = create<State>()(
 
       addAppointment: (input) =>
         set((s) => ({
+          undo: remember(s, `${input.plate} agendado · ${formatBRL(input.valueCents)}`),
           appointments: [
             ...s.appointments,
             { ...input, id: `n-${Date.now()}`, date: saoPauloDay(), status: 'aguardando' },
@@ -56,10 +78,14 @@ export const useStore = create<State>()(
         })),
 
       startWash: (id) => {
-        const today = saoPauloDay()
-        const box = nextFreeBox(get().appointments, today)
-        if (box === null) return false
-        set((s) => ({ appointments: s.appointments.map((a) => (a.id === id ? startAppointment(a, box) : a)) }))
+        const s = get()
+        const target = s.appointments.find((a) => a.id === id)
+        const box = nextFreeBox(s.appointments, saoPauloDay())
+        if (!target || target.status !== 'aguardando' || box === null) return false
+        set({
+          undo: remember(s, `${target.plate} em lavagem · Box ${String(box).padStart(2, '0')}`),
+          appointments: s.appointments.map((a) => (a.id === id ? startAppointment(a, box) : a)),
+        })
         return true
       },
 
@@ -69,13 +95,26 @@ export const useStore = create<State>()(
           if (!target || target.status !== 'lavando') return s
           const service = s.services.find((v) => v.id === target.serviceId)
           return {
+            undo: remember(s, `${target.plate} pronto · estoque atualizado`),
             appointments: s.appointments.map((a) => (a.id === id ? finishAppointment(a, saoPauloDay()) : a)),
             products: service ? deductStock(s.products, service) : s.products,
           }
         }),
 
       pay: (id, method) =>
-        set((s) => ({ appointments: s.appointments.map((a) => (a.id === id ? payAppointment(a, method) : a)) })),
+        set((s) => {
+          const target = s.appointments.find((a) => a.id === id)
+          if (!target || target.status !== 'pronto') return s
+          return {
+            undo: remember(s, `${target.plate} pago via ${METHOD_LABEL[method]} · ${formatBRL(target.valueCents)}`),
+            appointments: s.appointments.map((a) => (a.id === id ? payAppointment(a, method) : a)),
+          }
+        }),
+
+      undoLast: () =>
+        set((s) => (s.undo ? { appointments: s.undo.appointments, products: s.undo.products, undo: null } : s)),
+
+      dismissUndo: () => set({ undo: null }),
 
       setStock: (productId, ml) =>
         set((s) => ({
@@ -115,6 +154,14 @@ export const useStore = create<State>()(
     }),
     {
       name: 'dh-gestao.v1',
+      // O "Desfazer" não sobrevive ao recarregar a página.
+      partialize: ({ services, products, appointments, supplierPhone, seedDate }) => ({
+        services,
+        products,
+        appointments,
+        supplierPhone,
+        seedDate,
+      }),
       // Os dados de exemplo são relativos a "hoje": se o dia mudou, gera de novo.
       onRehydrateStorage: () => (state) => {
         if (state && state.seedDate !== saoPauloDay()) state.reset()

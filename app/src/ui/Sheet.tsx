@@ -1,5 +1,6 @@
+import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useRef, useState, type PointerEvent, type ReactNode } from 'react'
 
 interface Props {
   title: string
@@ -7,47 +8,62 @@ interface Props {
   children: ReactNode
 }
 
-/** Painel que sobe de baixo da tela. Fecha com Esc, toque no fundo ou no X. */
-export function Sheet({ title, onClose, children }: Props) {
-  const panel = useRef<HTMLDivElement>(null)
+const CLOSE_DISTANCE = 110
 
-  useEffect(() => {
-    const previous = document.activeElement as HTMLElement | null
-    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && onClose()
-    document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    panel.current?.focus()
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
-      previous?.focus()
-    }
-  }, [onClose])
+/**
+ * Painel que sobe de baixo da tela. O Radix cuida de foco preso dentro do painel,
+ * Esc, trava da rolagem e ARIA; aqui entra só o gesto de arrastar para baixo.
+ */
+export function Sheet({ title, onClose, children }: Props) {
+  const [offset, setOffset] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const startY = useRef(0)
+
+  function down(event: PointerEvent<HTMLDivElement>) {
+    startY.current = event.clientY
+    setDragging(true)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+  function move(event: PointerEvent<HTMLDivElement>) {
+    if (dragging) setOffset(Math.max(0, event.clientY - startY.current))
+  }
+  function up() {
+    if (!dragging) return
+    setDragging(false)
+    if (offset > CLOSE_DISTANCE) onClose()
+    else setOffset(0)
+  }
 
   return (
-    <div className="fixed inset-0 z-40 flex items-end justify-center bg-ink/40" onClick={onClose}>
-      <div
-        ref={panel}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        tabIndex={-1}
-        onClick={(event) => event.stopPropagation()}
-        className="flex max-h-[92dvh] w-full max-w-lg flex-col rounded-t-3xl bg-canvas shadow-2xl outline-none"
-      >
-        <div className="flex items-center justify-between px-5 pb-2 pt-4">
-          <h2 className="text-xl font-extrabold text-brand-deep">{title}</h2>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Fechar"
-            className="grid size-12 place-items-center rounded-full text-ink-soft active:bg-aqua-wash"
+    <Dialog.Root open onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/40" />
+        <Dialog.Content
+          aria-describedby={undefined}
+          style={{ transform: offset ? `translateY(${offset}px)` : undefined, transition: dragging ? 'none' : undefined }}
+          className="sheet-in fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[92dvh] w-full max-w-lg flex-col rounded-t-3xl bg-canvas shadow-2xl outline-none"
+        >
+          <div
+            onPointerDown={down}
+            onPointerMove={move}
+            onPointerUp={up}
+            onPointerCancel={up}
+            className="touch-none select-none"
           >
-            <X />
-          </button>
-        </div>
-        <div className="overflow-y-auto px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">{children}</div>
-      </div>
-    </div>
+            <div className="mx-auto mt-2 h-1.5 w-12 rounded-full bg-line" aria-hidden="true" />
+            <div className="flex items-center justify-between px-5 pb-2 pt-2">
+              <Dialog.Title className="text-xl font-extrabold text-brand-deep">{title}</Dialog.Title>
+              <Dialog.Close
+                aria-label="Fechar"
+                className="grid size-12 place-items-center rounded-full text-ink-soft active:bg-aqua-wash"
+              >
+                <X />
+              </Dialog.Close>
+            </div>
+          </div>
+          <div className="overflow-y-auto px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">{children}</div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }

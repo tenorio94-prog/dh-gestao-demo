@@ -64,3 +64,51 @@ body {
     transition: none !important;
   }
 }
+
+@keyframes sheet-in {
+  from {
+    translate: 0 100%;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+.sheet-in {
+  animation: sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Carro em lavagem: borda com brilho que gira, para ver de longe o que está em andamento. */
+@property --beam {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes beam-spin {
+  to {
+    --beam: 360deg;
+  }
+}
+.beam {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--color-card), var(--color-card)) padding-box,
+    conic-gradient(from var(--beam), transparent 0 55%, var(--color-aqua) 85%, var(--color-aqua-soft) 100%) border-box;
+  animation: beam-spin 3.2s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .beam {
+    background:
+      linear-gradient(var(--color-card), var(--color-card)) padding-box,
+      var(--color-aqua) border-box;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+.toast-in {
+  animation: toast-in 180ms ease-out;
+}
