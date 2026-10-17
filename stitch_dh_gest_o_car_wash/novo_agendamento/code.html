@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#f0fbff;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary-fixed': '#9ff0fb', 'secondary-fixed': '#70f8e8', 'on-secondary-fixed': '#00201d', 'on-tertiary': '#ffffff', 'error-container': '#ffdad6', 'on-primary-fixed-variant': '#004f56', 'surface-container-low': '#eaf6f9', 'tertiary-fixed': '#ffdbd0', 'primary-container': '#006d77', 'inverse-surface': '#283235', 'on-tertiary-fixed': '#390c00', 'surface': '#f0fbff', 'surface-tint': '#006972', 'on-secondary-container': '#007168', 'tertiary-container': '#b23700', 'on-secondary-fixed-variant': '#005049', 'secondary-fixed-dim': '#4fdbcc', 'surface-container': '#e4f0f3', 'primary': '#00535b', 'on-error': '#ffffff', 'on-error-container': '#93000a', 'primary-fixed-dim': '#82d3de', 'on-surface-variant': '#3e494a', 'surface-container-high': '#dfeaed', 'on-tertiary-fixed-variant': '#832600', 'surface-container-lowest': '#ffffff', 'secondary': '#006a62', 'on-background': '#131d20', 'on-primary-container': '#9becf7', 'surface-bright': '#f0fbff', 'outline': '#6f797a', 'tertiary-fixed-dim': '#ffb59d', 'inverse-primary': '#82d3de', 'on-primary-fixed': '#001f23', 'on-surface': '#131d20', 'secondary-container': '#70f8e8', 'error': '#ba1a1a', 'on-secondary': '#ffffff', 'on-primary': '#ffffff', 'surface-container-highest': '#d9e4e8', 'outline-variant': '#bec8ca', 'inverse-on-surface': '#e7f3f6', 'surface-dim': '#d1dcdf', 'surface-variant': '#d9e4e8', 'background': '#f0fbff', 'tertiary': '#892900', 'on-tertiary-container': '#ffd5c8' }, borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' }, spacing: { 'space-lg': '1.25rem', 'space-md': '0.75rem', 'space-xs': '0.25rem', gutter: '1rem', 'space-xl': '1.75rem', 'space-sm': '0.5rem', margin: '1rem' }, fontFamily: { 'label-tag': ['Plus Jakarta Sans'], 'body-sm': ['Plus Jakarta Sans'], 'headline-md': ['Plus Jakarta Sans'], 'label-button': ['Plus Jakarta Sans'], 'body-lg': ['Plus Jakarta Sans'], 'label-plate': ['JetBrains Mono'], 'headline-lg-mobile': ['Plus Jakarta Sans'], 'body-md': ['Plus Jakarta Sans'], 'headline-sm': ['Plus Jakarta Sans'], 'label-numeral': ['Plus Jakarta Sans'], 'headline-lg': ['Plus Jakarta Sans'] }, fontSize: { 'label-tag': ['11px', { lineHeight: '14px', letterSpacing: '0.5px', fontWeight: '800' }], 'body-sm': ['12px', { lineHeight: '16px', fontWeight: '500' }], 'headline-md': ['22px', { lineHeight: '28px', fontWeight: '700' }], 'label-button': ['16px', { lineHeight: '20px', letterSpacing: '0.2px', fontWeight: '700' }], 'body-lg': ['16px', { lineHeight: '24px', fontWeight: '600' }], 'label-plate': ['18px', { lineHeight: '20px', letterSpacing: '1.5px', fontWeight: '800' }], 'headline-lg-mobile': ['26px', { lineHeight: '32px', fontWeight: '800' }], 'body-md': ['14px', { lineHeight: '20px', fontWeight: '500' }], 'headline-sm': ['18px', { lineHeight: '24px', fontWeight: '700' }], 'label-numeral': ['20px', { lineHeight: '24px', fontWeight: '800' }], 'headline-lg': ['32px', { lineHeight: '40px', fontWeight: '800' }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,109,119,0.06)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><button class="w-12 h-12 -ml-2 rounded-xl flex items-center justify-center text-primary active:bg-surface-container" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="DH Gestão Logo" class="h-7 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1XZ_Ry4S3KLfkq3a6ccJsnm1oUjW6lqKGfEve_3_8uY3taAXTjXxyTGo3mvWWfpc6f7ywIXPWXc0vpYuf9Vipul75IG5NsQCAC6gWVDWFLpRD9-AyTJnkJaFXJ1XWMZL_lkSKmJmVv9PudHqLSdOUvwEtoVcILfs52i_zSFmnsWslB913qg06eD0fbUBrVnJBJ4rw5OiZSzzIPqIKICJv8erRzyNc5McH9YSDLnoBSUrzsD-ZV3kbs7gWU"/><h1 class="font-headline-sm text-headline-sm text-on-surface truncate ml-1">Entrada De Veículo</h1></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-32">
+<!-- Top Greeting & Contextual Prompt Banner -->
+<div class="px-gutter pt-space-md pb-space-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-[20px]">flash_on</span>
+<span class="font-label-tag text-label-tag uppercase tracking-wider text-primary">Pátio Ágil · Entrada Rápida</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary bg-secondary-fixed/40 px-space-sm py-0.5 rounded-full">Box Livre: 02</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Cadastre o veículo em menos de 30 segundos com toque rápido.</p>
+</div>
+<form class="flex flex-col gap-space-lg px-gutter" id="schedule-form" onsubmit="event.preventDefault(); triggerCelebration();">
+<!-- 1. Placa Mercosul Field -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col items-center">
+<div class="w-full flex items-center justify-between mb-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase" for="plate-input">1. Placa do Veículo</label>
+<span class="font-body-sm text-body-sm text-primary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[16px]">qr_code_scanner</span>
+          Escanear
+        </span>
+</div>
+<!-- Mercosul Graphic Plate Container -->
+<div class="w-full max-w-[280px] bg-surface-container-lowest rounded-lg shadow-md overflow-hidden flex flex-col">
+<!-- Mercosul Header Blue Stripe -->
+<div class="bg-primary text-on-primary h-6 px-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-secondary-fixed"></span>
+<span class="font-label-tag text-[9px] font-bold tracking-widest text-on-primary">BRASIL</span>
+</div>
+<!-- Miniature Flag / Mercosul emblem simulation -->
+<div class="flex items-center gap-0.5 opacity-90">
+<div class="w-3.5 h-2.5 bg-secondary flex items-center justify-center rounded-[1px]">
+<div class="w-1.5 h-1.5 rotate-45 bg-primary-fixed"></div>
+</div>
+</div>
+</div>
+<!-- Plate Main Characters Input Area -->
+<div class="bg-surface-container-lowest py-space-xs px-space-sm flex items-center justify-center">
+<input autocapitalize="characters" autocomplete="off" class="w-full text-center font-label-plate text-label-plate text-on-surface bg-transparent uppercase tracking-[0.25em] focus:outline-none placeholder:text-outline-variant caret-primary" id="plate-input" maxlength="7" oninput="this.value = this.value.toUpperCase()" placeholder="ABC1D23" type="text" value="BRA2E19"/>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-space-xs">Toque para alterar ou digitar a placa</p>
+</div>
+<!-- 2. Modelo e Cor do Carro -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase">2. Modelo &amp; Cor</label>
+<span class="font-body-sm text-body-sm font-bold text-primary" id="selected-summary">Compass · Preto</span>
+</div>
+<div class="relative w-full">
+<input class="w-full h-12 bg-surface-container-low rounded-lg px-space-md font-body-lg text-body-lg text-on-surface focus:outline-none focus:bg-surface-container placeholder:text-outline-variant" id="model-input" placeholder="Ex: Onix, Hilux, Creta..." type="text" value="Jeep Compass"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-outline active:bg-surface-container-high" onclick="document.getElementById('model-input').value=''; document.getElementById('model-input').focus();" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+<!-- Quick Model Chips -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-body-sm text-body-sm text-outline">Populares no pátio:</span>
+<div class="flex flex-wrap gap-space-xs" id="model-chips">
+<button class="h-9 px-space-md rounded-full bg-surface-container-low text-on-surface font-body-sm text-body-sm active:scale-95 transition-transform" onclick="selectModel('Onix')" type="button">Onix</button>
+<button class="h-9 px-space-md rounded-full bg-surface-container-low text-on-surface font-body-sm text-body-sm active:scale-95 transition-transform" onclick="selectModel('HB20')" type="button">HB20</button>
+<button class="h-9 px-space-md rounded-full bg-surface-container-low text-on-surface font-body-sm text-body-sm active:scale-95 transition-transform" onclick="selectModel('Corolla')" type="button">Corolla</button>
+<button class="h-9 px-space-md rounded-full bg-primary text-on-primary font-body-sm text-body-sm shadow-sm active:scale-95 transition-transform" onclick="selectModel('Compass')" type="button">Compass</button>
+<button class="h-9 px-space-md rounded-full bg-surface-container-low text-on-surface font-body-sm text-body-sm active:scale-95 transition-transform" onclick="selectModel('Gol')" type="button">Gol</button>
+</div>
+</div>
+<!-- Color Dot Selector -->
+<div class="flex items-center justify-between pt-space-xs">
+<span class="font-body-sm text-body-sm text-outline">Cor predominante:</span>
+<div class="flex items-center gap-space-sm" id="color-picker">
+<button class="w-8 h-8 rounded-full bg-inverse-surface shadow-md transform scale-110 flex items-center justify-center text-surface-container-lowest" onclick="selectColor('Preto', this)" title="Preto" type="button">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-on-surface" onclick="selectColor('Branco', this)" title="Branco" type="button"></button>
+<button class="w-8 h-8 rounded-full bg-surface-container-highest shadow-sm flex items-center justify-center text-on-surface" onclick="selectColor('Prata', this)" title="Prata / Cinza" type="button"></button>
+<button class="w-8 h-8 rounded-full bg-error shadow-sm flex items-center justify-center text-on-error" onclick="selectColor('Vermelho', this)" title="Vermelho" type="button"></button>
+<button class="w-8 h-8 rounded-full bg-primary shadow-sm flex items-center justify-center text-on-primary" onclick="selectColor('Azul', this)" title="Azul" type="button"></button>
+</div>
+</div>
+</div>
+<!-- 3. Seleção de Serviço -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-space-xs">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase">3. Serviço Escolhido</label>
+<span class="font-body-sm text-body-sm text-primary">Tempo estimado: <b id="est-time">50 min</b></span>
+</div>
+<div class="grid grid-cols-1 gap-space-sm" id="service-options">
+<!-- Option 1 -->
+<div class="service-card p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between cursor-pointer active:scale-[0.99] transition-all" onclick="selectService(50, '30 min', this)">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">water_drop</span>
+</div>
+<div>
+<h2 class="font-body-lg text-body-lg text-on-surface">Lavagem Simples</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ducha externa + aspiração leve</span>
+</div>
+</div>
+<div class="text-right shrink-0 pl-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">R$ 50</span>
+<span class="block font-body-sm text-body-sm text-outline">~30 min</span>
+</div>
+</div>
+<!-- Option 2 (Selected by default) -->
+<div class="service-card p-space-md rounded-xl bg-primary-fixed/20 shadow-md flex items-center justify-between cursor-pointer active:scale-[0.99] transition-all relative overflow-hidden" onclick="selectService(85, '50 min', this)">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
+<div class="flex items-center gap-space-md pl-1">
+<div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">auto_awesome</span>
+</div>
+<div>
+<div class="flex items-center gap-1">
+<h2 class="font-body-lg text-body-lg text-primary font-bold">Lavagem Completa + Cera</h2>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">Interna profunda + cera líquida alto brilho</span>
+</div>
+</div>
+<div class="text-right shrink-0 pl-space-sm">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">R$ 85</span>
+<span class="block font-body-sm text-body-sm text-primary">~50 min</span>
+</div>
+</div>
+<!-- Option 3 -->
+<div class="service-card p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between cursor-pointer active:scale-[0.99] transition-all" onclick="selectService(160, '2h', this)">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">flaky</span>
+</div>
+<div>
+<h2 class="font-body-lg text-body-lg text-on-surface">Polimento Comercial</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Eliminação de micro-riscos</span>
+</div>
+</div>
+<div class="text-right shrink-0 pl-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">R$ 160</span>
+<span class="block font-body-sm text-body-sm text-outline">~2h</span>
+</div>
+</div>
+<!-- Option 4 -->
+<div class="service-card p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between cursor-pointer active:scale-[0.99] transition-all" onclick="selectService(130, '1h30', this)">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">airline_seat_recline_extra</span>
+</div>
+<div>
+<h2 class="font-body-lg text-body-lg text-on-surface">Higienização Interna</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Bancos, teto e hidratação</span>
+</div>
+</div>
+<div class="text-right shrink-0 pl-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">R$ 130</span>
+<span class="block font-body-sm text-body-sm text-outline">~1h30</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. Horário de Início -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase">4. Início Previsto</label>
+<span class="font-body-sm text-body-sm text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+          Fila: 1 carro na frente
+        </span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs" id="time-pills">
+<button class="h-12 px-space-sm rounded-lg bg-primary text-on-primary font-body-md text-body-md font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="selectTime(this)" type="button">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+          Agora (10:30)
+        </button>
+<button class="h-12 px-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-center active:scale-95 transition-transform" onclick="selectTime(this)" type="button">
+          11:00
+        </button>
+<button class="h-12 px-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-center active:scale-95 transition-transform" onclick="selectTime(this)" type="button">
+          14:00
+        </button>
+<button class="h-12 px-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-center gap-1 active:scale-95 transition-transform" onclick="selectTime(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+          Outro horário
+        </button>
+</div>
+</div>
+<!-- 5. Valor Cobrado (Ajuste Rápido) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase">5. Valor Final Cobrado</label>
+<span class="font-body-sm text-body-sm text-outline">Ajuste de cortesia ou taxa</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low rounded-xl p-space-sm">
+<button class="w-12 h-12 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center text-on-surface active:scale-90 transition-transform" onclick="adjustPrice(-5)" type="button">
+<span class="material-symbols-outlined text-[24px]">remove</span>
+</button>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface-variant">R$</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold" id="price-display">85,00</span>
+</div>
+<button class="w-12 h-12 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center text-on-surface active:scale-90 transition-transform" onclick="adjustPrice(5)" type="button">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</button>
+</div>
+<!-- Quick Discount / Addition Pills -->
+<div class="flex items-center justify-center gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-body-sm text-body-sm active:bg-surface-container-high" onclick="adjustPrice(-10)" type="button">- R$ 10 desc.</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-body-sm text-body-sm active:bg-surface-container-high" onclick="setExactPrice(85)" type="button">Reset Tabela</button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-body-sm text-body-sm active:bg-surface-container-high" onclick="adjustPrice(15)" type="button">+ R$ 15 extra</button>
+</div>
+</div>
+<!-- 6. Cliente & WhatsApp (Opcional) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<label class="font-label-tag text-label-tag text-on-surface-variant uppercase">6. Notificação Carro Pronto</label>
+<span class="font-body-sm text-body-sm text-secondary bg-secondary-fixed/30 px-space-xs rounded font-bold">WhatsApp Auto</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<input class="w-full h-11 bg-surface-container-low rounded-lg px-space-md font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container placeholder:text-outline-variant" placeholder="Nome do Cliente (opcional)" type="text"/>
+<div class="relative w-full">
+<input class="w-full h-11 bg-surface-container-low rounded-lg pl-10 pr-space-md font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container placeholder:text-outline-variant" placeholder="(11) 98765-4321" type="tel"/>
+<span class="material-symbols-outlined text-[18px] text-secondary absolute left-3 top-1/2 -translate-y-1/2">chat</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Enviaremos aviso automático com link para retirada assim que terminar.</p>
+</div>
+<!-- Pátio Operational Tip Box -->
+<div class="p-space-md rounded-xl bg-surface-container-high flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        Veículo será direcionado para o <b>Box 02 (Área Úmida)</b> com prioridade operacional imediata.
+      </p>
+</div>
+</form>
+<!-- Sticky Confirm Agendamento CTA Button -->
+<div class="fixed bottom-0 left-0 right-0 p-gutter bg-surface-bright/95 backdrop-blur-md shadow-lg z-40 flex flex-col gap-space-xs">
+<button class="w-full h-14 bg-tertiary-container text-on-tertiary rounded-xl font-label-button text-label-button flex items-center justify-center gap-space-xs shadow-xl active:scale-[0.98] transition-transform" onclick="triggerCelebration()" style="box-shadow: 0 8px 24px -4px rgba(178, 55, 0, 0.4);" type="button">
+<span class="material-symbols-outlined text-[24px]">check_circle</span>
+      Confirmar Agendamento · R$ <span id="btn-price">85,00</span>
+</button>
+</div>
+<!-- Micro-interaction Feedback Toast (Hidden by default) -->
+<div class="fixed top-20 left-4 right-4 bg-primary text-on-primary p-space-md rounded-xl shadow-2xl flex items-center gap-space-md translate-y-[-150%] transition-transform duration-300 z-50 pointer-events-none" id="success-toast">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed shrink-0">
+<span class="material-symbols-outlined text-[24px]">done_all</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg font-bold">Agendamento Realizado!</span>
+<span class="font-body-sm text-body-sm text-on-primary-container">Veículo enviado ao Box 02 com sucesso.</span>
+</div>
+</div>
+</div>
+<script>
+  let currentPrice = 85;
+  let currentColor = 'Preto';
+  let currentModel = 'Compass';
+
+  function updatePriceDisplay() {
+    const formatted = currentPrice.toFixed(2).replace('.', ',');
+    document.getElementById('price-display').innerText = formatted;
+    document.getElementById('btn-price').innerText = formatted;
+  }
+
+  function adjustPrice(delta) {
+    currentPrice = Math.max(0, currentPrice + delta);
+    updatePriceDisplay();
+  }
+
+  function setExactPrice(val) {
+    currentPrice = val;
+    updatePriceDisplay();
+  }
+
+  function selectModel(modelName) {
+    currentModel = modelName;
+    document.getElementById('model-input').value = modelName;
+    document.getElementById('selected-summary').innerText = currentModel + ' · ' + currentColor;
+
+    const chips = document.querySelectorAll('#model-chips button');
+    chips.forEach(btn => {
+      if (btn.innerText.trim() === modelName) {
+        btn.className = "h-9 px-space-md rounded-full bg-primary text-on-primary font-body-sm text-body-sm shadow-sm active:scale-95 transition-transform";
+      } else {
+        btn.className = "h-9 px-space-md rounded-full bg-surface-container-low text-on-surface font-body-sm text-body-sm active:scale-95 transition-transform";
+      }
+    });
+  }
+
+  function selectColor(colorName, btnElement) {
+    currentColor = colorName;
+    document.getElementById('selected-summary').innerText = currentModel + ' · ' + currentColor;
+
+    const allButtons = document.querySelectorAll('#color-picker button');
+    allButtons.forEach(b => {
+      b.innerHTML = '';
+      b.classList.remove('scale-110');
+    });
+
+    btnElement.classList.add('scale-110');
+    btnElement.innerHTML = `<span class="material-symbols-outlined text-[16px] font-bold">check</span>`;
+  }
+
+  function selectService(basePrice, duration, cardElement) {
+    setExactPrice(basePrice);
+    document.getElementById('est-time').innerText = duration;
+
+    const allCards = document.querySelectorAll('.service-card');
+    allCards.forEach(card => {
+      card.className = "service-card p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between cursor-pointer active:scale-[0.99] transition-all";
+      const iconBox = card.querySelector('div > div:first-child');
+      if (iconBox) {
+        iconBox.className = "w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary";
+      }
+      const title = card.querySelector('h2');
+      if (title) {
+        title.className = "font-body-lg text-body-lg text-on-surface";
+      }
+      const existingBar = card.querySelector('.service-active-bar');
+      if (existingBar) existingBar.remove();
+    });
+
+    cardElement.className = "service-card p-space-md rounded-xl bg-primary-fixed/20 shadow-md flex items-center justify-between cursor-pointer active:scale-[0.99] transition-all relative overflow-hidden";
+    
+    const activeBar = document.createElement('div');
+    activeBar.className = "service-active-bar absolute left-0 top-0 bottom-0 w-1.5 bg-primary";
+    cardElement.prepend(activeBar);
+
+    const iconBox = cardElement.querySelector('div > div:first-child');
+    if (iconBox) {
+      iconBox.className = "w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center";
+    }
+    const title = cardElement.querySelector('h2');
+    if (title) {
+      title.className = "font-body-lg text-body-lg text-primary font-bold";
+    }
+  }
+
+  function selectTime(pillBtn) {
+    const allPills = document.querySelectorAll('#time-pills button');
+    allPills.forEach(p => {
+      p.className = "h-12 px-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-center active:scale-95 transition-transform";
+    });
+    pillBtn.className = "h-12 px-space-sm rounded-lg bg-primary text-on-primary font-body-md text-body-md font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform";
+  }
+
+  function triggerCelebration() {
+    const toast = document.getElementById('success-toast');
+    toast.classList.remove('translate-y-[-150%]');
+    toast.classList.add('translate-y-0');
+
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0');
+      toast.classList.add('translate-y-[-150%]');
+    }, 3200);
+  }
+</script></main></body></html>

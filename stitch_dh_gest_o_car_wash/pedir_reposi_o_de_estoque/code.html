@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#f0fbff;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary-fixed': '#9ff0fb', 'secondary-fixed': '#70f8e8', 'on-secondary-fixed': '#00201d', 'on-tertiary': '#ffffff', 'error-container': '#ffdad6', 'on-primary-fixed-variant': '#004f56', 'surface-container-low': '#eaf6f9', 'tertiary-fixed': '#ffdbd0', 'primary-container': '#006d77', 'inverse-surface': '#283235', 'on-tertiary-fixed': '#390c00', 'surface': '#f0fbff', 'surface-tint': '#006972', 'on-secondary-container': '#007168', 'tertiary-container': '#b23700', 'on-secondary-fixed-variant': '#005049', 'secondary-fixed-dim': '#4fdbcc', 'surface-container': '#e4f0f3', 'primary': '#00535b', 'on-error': '#ffffff', 'on-error-container': '#93000a', 'primary-fixed-dim': '#82d3de', 'on-surface-variant': '#3e494a', 'surface-container-high': '#dfeaed', 'on-tertiary-fixed-variant': '#832600', 'surface-container-lowest': '#ffffff', 'secondary': '#006a62', 'on-background': '#131d20', 'on-primary-container': '#9becf7', 'surface-bright': '#f0fbff', 'outline': '#6f797a', 'tertiary-fixed-dim': '#ffb59d', 'inverse-primary': '#82d3de', 'on-primary-fixed': '#001f23', 'on-surface': '#131d20', 'secondary-container': '#70f8e8', 'error': '#ba1a1a', 'on-secondary': '#ffffff', 'on-primary': '#ffffff', 'surface-container-highest': '#d9e4e8', 'outline-variant': '#bec8ca', 'inverse-on-surface': '#e7f3f6', 'surface-dim': '#d1dcdf', 'surface-variant': '#d9e4e8', 'background': '#f0fbff', 'tertiary': '#892900', 'on-tertiary-container': '#ffd5c8' }, borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' }, spacing: { 'space-lg': '1.25rem', 'space-md': '0.75rem', 'space-xs': '0.25rem', gutter: '1rem', 'space-xl': '1.75rem', 'space-sm': '0.5rem', margin: '1rem' }, fontFamily: { 'label-tag': ['Plus Jakarta Sans'], 'body-sm': ['Plus Jakarta Sans'], 'headline-md': ['Plus Jakarta Sans'], 'label-button': ['Plus Jakarta Sans'], 'body-lg': ['Plus Jakarta Sans'], 'label-plate': ['JetBrains Mono'], 'headline-lg-mobile': ['Plus Jakarta Sans'], 'body-md': ['Plus Jakarta Sans'], 'headline-sm': ['Plus Jakarta Sans'], 'label-numeral': ['Plus Jakarta Sans'], 'headline-lg': ['Plus Jakarta Sans'] }, fontSize: { 'label-tag': ['11px', { lineHeight: '14px', letterSpacing: '0.5px', fontWeight: '800' }], 'body-sm': ['12px', { lineHeight: '16px', fontWeight: '500' }], 'headline-md': ['22px', { lineHeight: '28px', fontWeight: '700' }], 'label-button': ['16px', { lineHeight: '20px', letterSpacing: '0.2px', fontWeight: '700' }], 'body-lg': ['16px', { lineHeight: '24px', fontWeight: '600' }], 'label-plate': ['18px', { lineHeight: '20px', letterSpacing: '1.5px', fontWeight: '800' }], 'headline-lg-mobile': ['26px', { lineHeight: '32px', fontWeight: '800' }], 'body-md': ['14px', { lineHeight: '20px', fontWeight: '500' }], 'headline-sm': ['18px', { lineHeight: '24px', fontWeight: '700' }], 'label-numeral': ['20px', { lineHeight: '24px', fontWeight: '800' }], 'headline-lg': ['32px', { lineHeight: '40px', fontWeight: '800' }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,109,119,0.06)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><button class="w-12 h-12 -ml-2 rounded-xl flex items-center justify-center text-primary active:bg-surface-container" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="DH Gestão Logo" class="h-7 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1XZ_Ry4S3KLfkq3a6ccJsnm1oUjW6lqKGfEve_3_8uY3taAXTjXxyTGo3mvWWfpc6f7ywIXPWXc0vpYuf9Vipul75IG5NsQCAC6gWVDWFLpRD9-AyTJnkJaFXJ1XWMZL_lkSKmJmVv9PudHqLSdOUvwEtoVcILfs52i_zSFmnsWslB913qg06eD0fbUBrVnJBJ4rw5OiZSzzIPqIKICJv8erRzyNc5McH9YSDLnoBSUrzsD-ZV3kbs7gWU"/><h1 class="font-headline-sm text-headline-sm text-on-surface truncate ml-1">Novo Item Estoque</h1></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-8">
+<div class="px-gutter pt-space-md flex flex-col gap-space-md">
+<!-- Item Critical Alert & Product Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-tag text-label-tag tracking-wider uppercase">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+          Nível Crítico (18% · Acaba em 4 dias)
+        </span>
+</div>
+<div class="flex items-center gap-space-md mt-1">
+<div class="w-20 h-20 rounded-lg overflow-hidden bg-surface-container shrink-0 flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A professional heavy-duty 5-liter teal plastic jug of automotive neutral pH car wash foam soap sitting cleanly on a workshop counter, clean automotive detail studio lighting, soft reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClVV_FjXweXyKMNnywByuiq2d--tACSlhjmdvkx2ixdqD1lEdrkhesKfJu5M7WEGbGd9Rp4si15hgz1-KyF_vA2OJwP8FN2nW2Al4S3IF6egPvddpQ0pF4JdhASxvUYTx-A0PFB2nlLJWzjuXXt070G35VUKBDpiKCppidWtfZ9m5Ny-R83s4vBaMgKhcZvfPQ8dr0-_NxGpaurscg1rf8TibVyT98hyFJuLfFOobRtfZ8u4QQijRf"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-tag text-label-tag text-on-surface-variant uppercase tracking-wide">Química de Lavagem</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface line-clamp-2 leading-tight">Shampoo Automotivo Neutro (5L Concentrado)</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Uso diário médio: ~1,2L / dia</p>
+</div>
+</div>
+</div>
+<!-- Stepper / Ergonomic Wet Hand Quantity Selector -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Quantidade</span>
+<span class="font-label-tag text-label-tag text-primary bg-primary-fixed/40 px-2 py-0.5 rounded-full">Frascos de 5 Litros</span>
+</div>
+<div class="flex items-center justify-between gap-space-md bg-surface-container-low rounded-xl p-2">
+<button aria-label="Diminuir quantidade" class="w-14 h-14 rounded-lg bg-surface-container-lowest text-primary active:scale-95 transition-transform flex items-center justify-center shadow-sm select-none" id="btn-decrement" type="button">
+<span class="material-symbols-outlined text-[28px]">remove</span>
+</button>
+<div class="flex flex-col items-center justify-center flex-1 min-w-0 select-none py-1">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary" id="qty-number">2</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">galões</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium" id="qty-liters">(10 Litros)</span>
+</div>
+<button aria-label="Aumentar quantidade" class="w-14 h-14 rounded-lg bg-primary text-on-primary active:scale-95 transition-transform flex items-center justify-center shadow-sm select-none" id="btn-increment" type="button">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+</div>
+<!-- Financial Calculation Pill -->
+<div class="bg-surface-container rounded-lg p-space-md flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Total estimado</span>
+<span class="font-headline-sm text-headline-sm text-primary" id="total-price">R$ 138,00</span>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">R$ 69,00 un.</span>
+</div>
+</div>
+<!-- Fast Supplier Selection -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between px-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">Fornecedores Homologados</span>
+<span class="font-body-sm text-body-sm text-primary font-medium">2 disponíveis</span>
+</div>
+<!-- Supplier 1: Express (Default Selected) -->
+<label class="cursor-pointer relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest shadow-sm transition-all has-[:checked]:bg-surface-container-low has-[:checked]:shadow-md">
+<input checked="" class="mt-1 w-5 h-5 accent-primary shrink-0" name="supplier" onchange="updateSupplier('autobrilho')" type="radio" value="autobrilho"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-body-lg text-body-lg text-on-surface truncate">Distribuidora AutoBrilho Express</span>
+<span class="font-label-tag text-label-tag px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container shrink-0">Mais rápida</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">bolt</span>
+<span>Entrega hoje até as 16h</span>
+</div>
+<div class="flex items-center gap-2 mt-2 pt-2 bg-surface-container-highest/30 -mx-space-md -mb-space-md px-space-md py-1.5 rounded-b-xl">
+<span class="material-symbols-outlined text-[15px] text-on-surface-variant">verified</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Prazo recorde no pátio · Pagamento faturado 15D</span>
+</div>
+</div>
+</label>
+<!-- Supplier 2: Economical -->
+<label class="cursor-pointer relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest shadow-sm transition-all has-[:checked]:bg-surface-container-low has-[:checked]:shadow-md">
+<input class="mt-1 w-5 h-5 accent-primary shrink-0" name="supplier" onchange="updateSupplier('quimica')" type="radio" value="quimica"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-body-lg text-body-lg text-on-surface truncate">Química Automotiva Brasil</span>
+<span class="font-label-tag text-label-tag px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant shrink-0">Mais econômico</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Entrega amanhã cedo</span>
+</div>
+<div class="flex items-center gap-2 mt-2 pt-2 bg-surface-container-highest/30 -mx-space-md -mb-space-md px-space-md py-1.5 rounded-b-xl">
+<span class="material-symbols-outlined text-[15px] text-on-surface-variant">savings</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Desconto de 5% à vista no Pix</span>
+</div>
+</div>
+</label>
+</div>
+<!-- WhatsApp Message Live Preview -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px] text-primary">chat</span>
+          Prévia da mensagem pronta:
+        </span>
+<span class="font-label-tag text-label-tag text-secondary font-bold">1-CLIQUE</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md text-on-surface font-body-sm text-body-sm leading-relaxed select-all" id="whatsapp-preview-box">
+        "Olá! Gostaria de pedir reposição de <strong id="preview-qty-label">2x Galão Shampoo Neutro 5L</strong> para o Lava Jato DH."
+      </div>
+</div>
+<!-- Action Triggers -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- WhatsApp Primary Action Trigger (min-height 56px, high ergonomic priority) -->
+<button class="h-14 w-full bg-secondary text-on-secondary rounded-xl font-label-button text-label-button flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform" id="btn-send-whatsapp" type="button">
+<span class="material-symbols-outlined text-[24px]">send</span>
+<span>Enviar Pedido via WhatsApp</span>
+</button>
+<!-- Phone Call Alternative Action (min-height 48px) -->
+<a class="h-12 w-full bg-surface-container-low text-primary rounded-xl font-body-lg text-body-lg flex items-center justify-center gap-2 active:bg-surface-container transition-colors" href="tel:+5511988887777">
+<span class="material-symbols-outlined text-[20px]">call</span>
+<span>Ligar para Fornecedor</span>
+</a>
+</div>
+<!-- Success & Sync Micro-Assurance Banner -->
+<div class="bg-secondary-container/40 rounded-xl p-space-md flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed leading-tight">
+        Seu saldo de estoque será atualizado automaticamente ao confirmar o recebimento na doca.
+      </p>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    let quantity = 2;
+    const unitPrice = 69.00;
+    const litersPerUnit = 5;
+
+    const qtyNumberEl = document.getElementById('qty-number');
+    const qtyLitersEl = document.getElementById('qty-liters');
+    const totalPriceEl = document.getElementById('total-price');
+    const previewQtyLabelEl = document.getElementById('preview-qty-label');
+    const btnDecrement = document.getElementById('btn-decrement');
+    const btnIncrement = document.getElementById('btn-increment');
+    const btnWhatsApp = document.getElementById('btn-send-whatsapp');
+
+    function updateDisplay() {
+      qtyNumberEl.textContent = quantity;
+      qtyLitersEl.textContent = `(${quantity * litersPerUnit} Litros)`;
+      
+      const total = (quantity * unitPrice).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+      totalPriceEl.textContent = total;
+
+      const unitWord = quantity > 1 ? 'Galões' : 'Galão';
+      previewQtyLabelEl.textContent = `${quantity}x ${unitWord} Shampoo Neutro 5L`;
+    }
+
+    btnDecrement.addEventListener('click', function () {
+      if (quantity > 1) {
+        quantity--;
+        updateDisplay();
+      }
+    });
+
+    btnIncrement.addEventListener('click', function () {
+      if (quantity < 50) {
+        quantity++;
+        updateDisplay();
+      }
+    });
+
+    btnWhatsApp.addEventListener('click', function () {
+      const msg = encodeURIComponent(
+        `Olá! Gostaria de pedir reposição de ${quantity}x Galão Shampoo Neutro 5L para o Lava Jato DH.`
+      );
+      window.open(`https://wa.me/5511999998888?text=${msg}`, '_blank');
+    });
+
+    window.updateSupplier = function (type) {
+      const isAutoBrilho = type === 'autobrilho';
+      btnWhatsApp.dataset.supplier = type;
+    };
+  })();
+</script></main></body></html>

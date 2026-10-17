@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#f0fbff;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary-fixed': '#9ff0fb', 'secondary-fixed': '#70f8e8', 'on-secondary-fixed': '#00201d', 'on-tertiary': '#ffffff', 'error-container': '#ffdad6', 'on-primary-fixed-variant': '#004f56', 'surface-container-low': '#eaf6f9', 'tertiary-fixed': '#ffdbd0', 'primary-container': '#006d77', 'inverse-surface': '#283235', 'on-tertiary-fixed': '#390c00', 'surface': '#f0fbff', 'surface-tint': '#006972', 'on-secondary-container': '#007168', 'tertiary-container': '#b23700', 'on-secondary-fixed-variant': '#005049', 'secondary-fixed-dim': '#4fdbcc', 'surface-container': '#e4f0f3', 'primary': '#00535b', 'on-error': '#ffffff', 'on-error-container': '#93000a', 'primary-fixed-dim': '#82d3de', 'on-surface-variant': '#3e494a', 'surface-container-high': '#dfeaed', 'on-tertiary-fixed-variant': '#832600', 'surface-container-lowest': '#ffffff', 'secondary': '#006a62', 'on-background': '#131d20', 'on-primary-container': '#9becf7', 'surface-bright': '#f0fbff', 'outline': '#6f797a', 'tertiary-fixed-dim': '#ffb59d', 'inverse-primary': '#82d3de', 'on-primary-fixed': '#001f23', 'on-surface': '#131d20', 'secondary-container': '#70f8e8', 'error': '#ba1a1a', 'on-secondary': '#ffffff', 'on-primary': '#ffffff', 'surface-container-highest': '#d9e4e8', 'outline-variant': '#bec8ca', 'inverse-on-surface': '#e7f3f6', 'surface-dim': '#d1dcdf', 'surface-variant': '#d9e4e8', 'background': '#f0fbff', 'tertiary': '#892900', 'on-tertiary-container': '#ffd5c8' }, borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' }, spacing: { 'space-lg': '1.25rem', 'space-md': '0.75rem', 'space-xs': '0.25rem', gutter: '1rem', 'space-xl': '1.75rem', 'space-sm': '0.5rem', margin: '1rem' }, fontFamily: { 'label-tag': ['Plus Jakarta Sans'], 'body-sm': ['Plus Jakarta Sans'], 'headline-md': ['Plus Jakarta Sans'], 'label-button': ['Plus Jakarta Sans'], 'body-lg': ['Plus Jakarta Sans'], 'label-plate': ['JetBrains Mono'], 'headline-lg-mobile': ['Plus Jakarta Sans'], 'body-md': ['Plus Jakarta Sans'], 'headline-sm': ['Plus Jakarta Sans'], 'label-numeral': ['Plus Jakarta Sans'], 'headline-lg': ['Plus Jakarta Sans'] }, fontSize: { 'label-tag': ['11px', { lineHeight: '14px', letterSpacing: '0.5px', fontWeight: '800' }], 'body-sm': ['12px', { lineHeight: '16px', fontWeight: '500' }], 'headline-md': ['22px', { lineHeight: '28px', fontWeight: '700' }], 'label-button': ['16px', { lineHeight: '20px', letterSpacing: '0.2px', fontWeight: '700' }], 'body-lg': ['16px', { lineHeight: '24px', fontWeight: '600' }], 'label-plate': ['18px', { lineHeight: '20px', letterSpacing: '1.5px', fontWeight: '800' }], 'headline-lg-mobile': ['26px', { lineHeight: '32px', fontWeight: '800' }], 'body-md': ['14px', { lineHeight: '20px', fontWeight: '500' }], 'headline-sm': ['18px', { lineHeight: '24px', fontWeight: '700' }], 'label-numeral': ['20px', { lineHeight: '24px', fontWeight: '800' }], 'headline-lg': ['32px', { lineHeight: '40px', fontWeight: '800' }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,109,119,0.06)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="DH Gestão Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1XZ_Ry4S3KLfkq3a6ccJsnm1oUjW6lqKGfEve_3_8uY3taAXTjXxyTGo3mvWWfpc6f7ywIXPWXc0vpYuf9Vipul75IG5NsQCAC6gWVDWFLpRD9-AyTJnkJaFXJ1XWMZL_lkSKmJmVv9PudHqLSdOUvwEtoVcILfs52i_zSFmnsWslB913qg06eD0fbUBrVnJBJ4rw5OiZSzzIPqIKICJv8erRzyNc5McH9YSDLnoBSUrzsD-ZV3kbs7gWU"/><div class="flex flex-col min-w-0"><span class="font-label-button text-label-button text-primary truncate leading-none">DH Gestão</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Hoje</span></div></div><div class="flex items-center gap-space-sm shrink-0"><div class="h-9 px-space-sm rounded-full bg-secondary-fixed/50 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="font-label-tag text-label-tag text-on-secondary-fixed uppercase tracking-wider">Pátio Ativo</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full px-gutter py-space-sm gap-space-md">
+<!-- Summary Card with Aquatic Fresh Gradient -->
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary-container via-primary to-secondary text-on-primary p-space-md shadow-md flex flex-col gap-space-sm">
+<!-- Subtle Water Gloss Decorative Shape -->
+<svg class="absolute -right-8 -top-8 w-44 h-44 text-surface-tint/20 pointer-events-none" fill="currentColor" viewbox="0 0 100 100">
+<path d="M50 0 C70 30 95 45 95 70 C95 85 80 100 50 100 C20 100 5 85 5 70 C5 45 30 30 50 0 Z"></path>
+</svg>
+<div class="flex items-center justify-between z-10">
+<div class="flex items-center gap-1.5 bg-surface-container-lowest/15 backdrop-blur-md px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[15px] text-primary-fixed">calendar_today</span>
+<span class="font-label-tag text-label-tag text-primary-fixed uppercase tracking-wider">Hoje, 24 de Outubro</span>
+</div>
+<span class="font-label-tag text-label-tag bg-secondary-fixed/30 text-secondary-fixed px-2 py-0.5 rounded-full uppercase">Pátio Cheio</span>
+</div>
+<div class="z-10 flex items-baseline justify-between pt-1">
+<div>
+<p class="font-body-sm text-body-sm text-on-primary-container">Fluxo do Dia</p>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-primary tracking-tight">8 carros</h2>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-body-sm text-on-primary-container">Total Previsto</p>
+<p class="font-headline-sm text-headline-sm text-secondary-fixed tracking-tight">R$ 640,00</p>
+</div>
+</div>
+<!-- Quick Metrics Strip -->
+<div class="grid grid-cols-3 gap-1.5 pt-1 z-10">
+<div class="bg-surface-container-lowest/10 rounded-lg p-2 text-center backdrop-blur-sm">
+<span class="font-body-sm text-body-sm text-on-primary-container block">Faturado</span>
+<span class="font-label-button text-label-button text-on-primary">R$ 90</span>
+</div>
+<div class="bg-surface-container-lowest/10 rounded-lg p-2 text-center backdrop-blur-sm">
+<span class="font-body-sm text-body-sm text-on-primary-container block">Em box</span>
+<span class="font-label-button text-label-button text-secondary-fixed">3 carros</span>
+</div>
+<div class="bg-surface-container-lowest/10 rounded-lg p-2 text-center backdrop-blur-sm">
+<span class="font-body-sm text-body-sm text-on-primary-container block">Aguardando</span>
+<span class="font-label-button text-label-button text-tertiary-fixed">2 carros</span>
+</div>
+</div>
+</div>
+<!-- Big Coral Action Banner (56px high, high tactile target for wet thumbs) -->
+<button class="w-full h-14 bg-tertiary text-on-tertiary rounded-xl shadow-lg flex items-center justify-center gap-space-sm active:scale-[0.98] transition-transform" id="btnNovoAgendamento">
+<div class="w-7 h-7 rounded-full bg-on-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</div>
+<span class="font-label-button text-label-button tracking-wide">Novo Agendamento</span>
+</button>
+<!-- Horizontal Filter Chips (Car Wash Flow Tabs) -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 -mx-gutter px-gutter">
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-primary text-on-primary font-label-tag text-label-tag flex items-center gap-1 shadow-sm" data-filter="all">
+<span>Todos</span>
+<span class="bg-on-primary/20 px-1.5 py-0.2 rounded-full text-[10px]">8</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-tag text-label-tag flex items-center gap-1" data-filter="aguardando">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>Aguardando</span>
+<span class="bg-surface-container-high px-1.5 py-0.2 rounded-full text-[10px]">2</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-tag text-label-tag flex items-center gap-1" data-filter="lavando">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+<span>Lavando</span>
+<span class="bg-surface-container-high px-1.5 py-0.2 rounded-full text-[10px]">3</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-tag text-label-tag flex items-center gap-1" data-filter="pronto">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+<span>Prontos</span>
+<span class="bg-surface-container-high px-1.5 py-0.2 rounded-full text-[10px]">2</span>
+</button>
+<button class="filter-chip shrink-0 h-9 px-3.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-tag text-label-tag flex items-center gap-1" data-filter="pago">
+<span>Pagos</span>
+<span class="bg-surface-container-high px-1.5 py-0.2 rounded-full text-[10px]">1</span>
+</button>
+</div>
+<!-- Operational Vehicle Queue (Live Yard Cards) -->
+<div class="flex flex-col gap-space-sm" id="carList">
+<!-- Card 1: Lavando (Active Bay 01) -->
+<div class="car-card relative bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm" data-status="lavando">
+<div class="flex items-start justify-between gap-space-sm">
+<!-- Mercosul Plate Badge -->
+<div class="shrink-0 w-28 bg-surface-container-lowest rounded shadow-sm overflow-hidden">
+<div class="bg-[#003399] px-1 py-0.5 flex items-center justify-between text-on-primary">
+<span class="text-[8px] font-black tracking-widest leading-none">BRASIL</span>
+<div class="flex items-center gap-0.5">
+<span class="w-1.5 h-1 bg-[#228844] rounded-[0.5px] block"></span>
+<span class="w-1 h-1 bg-[#ffcc00] rounded-[0.5px] block"></span>
+</div>
+</div>
+<div class="py-1 px-1.5 text-center bg-surface-container-lowest">
+<span class="font-label-plate text-label-plate text-inverse-surface tracking-wider block">BRA-2E19</span>
+</div>
+</div>
+<!-- Box & Entrance Info -->
+<div class="flex flex-col items-end text-right">
+<div class="flex items-center gap-1 bg-secondary-fixed/40 px-2 py-0.5 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-tag text-label-tag text-on-secondary-fixed uppercase">Box 01</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> 09:30
+          </span>
+</div>
+</div>
+<!-- Vehicle & Service Row -->
+<div class="flex items-start justify-between gap-space-sm pt-0.5">
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Jeep Compass Prata</h3>
+<span class="inline-block mt-0.5 font-label-tag text-label-tag text-primary bg-surface-container-low px-2 py-0.5 rounded">
+            Lavagem Completa + Cera
+          </span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-numeral text-label-numeral text-primary">R$ 90,00</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Pix pendente</span>
+</div>
+</div>
+<!-- Live Action Buttons for Yard Operators -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="h-12 bg-secondary-fixed/50 active:bg-secondary-fixed text-on-secondary-fixed font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">autorenew</span>
+<span>Lavando</span>
+</button>
+<button class="h-12 bg-surface-container text-on-surface-variant active:bg-surface-container-high font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">chat</span>
+<span>Avisar</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Lavando (Active Bay 02) -->
+<div class="car-card relative bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm" data-status="lavando">
+<div class="flex items-start justify-between gap-space-sm">
+<!-- Mercosul Plate Badge -->
+<div class="shrink-0 w-28 bg-surface-container-lowest rounded shadow-sm overflow-hidden">
+<div class="bg-[#003399] px-1 py-0.5 flex items-center justify-between text-on-primary">
+<span class="text-[8px] font-black tracking-widest leading-none">BRASIL</span>
+<div class="flex items-center gap-0.5">
+<span class="w-1.5 h-1 bg-[#228844] rounded-[0.5px] block"></span>
+<span class="w-1 h-1 bg-[#ffcc00] rounded-[0.5px] block"></span>
+</div>
+</div>
+<div class="py-1 px-1.5 text-center bg-surface-container-lowest">
+<span class="font-label-plate text-label-plate text-inverse-surface tracking-wider block">RIO-4A82</span>
+</div>
+</div>
+<div class="flex flex-col items-end text-right">
+<div class="flex items-center gap-1 bg-secondary-fixed/40 px-2 py-0.5 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-tag text-label-tag text-on-secondary-fixed uppercase">Box 02</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> 10:15
+          </span>
+</div>
+</div>
+<div class="flex items-start justify-between gap-space-sm pt-0.5">
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Chevrolet Onix Branco</h3>
+<span class="inline-block mt-0.5 font-label-tag text-label-tag text-primary bg-surface-container-low px-2 py-0.5 rounded">
+            Lavagem Simples
+          </span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-numeral text-label-numeral text-primary">R$ 55,00</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Cartão Débito</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="h-12 bg-secondary-fixed/50 active:bg-secondary-fixed text-on-secondary-fixed font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Finalizar</span>
+</button>
+<button class="h-12 bg-surface-container text-on-surface-variant active:bg-surface-container-high font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">chat</span>
+<span>Avisar</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Pronto (Finished, Ready for Pickup) -->
+<div class="car-card relative bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm" data-status="pronto">
+<div class="flex items-start justify-between gap-space-sm">
+<!-- Mercosul Plate Badge -->
+<div class="shrink-0 w-28 bg-surface-container-lowest rounded shadow-sm overflow-hidden">
+<div class="bg-[#003399] px-1 py-0.5 flex items-center justify-between text-on-primary">
+<span class="text-[8px] font-black tracking-widest leading-none">BRASIL</span>
+<div class="flex items-center gap-0.5">
+<span class="w-1.5 h-1 bg-[#228844] rounded-[0.5px] block"></span>
+<span class="w-1 h-1 bg-[#ffcc00] rounded-[0.5px] block"></span>
+</div>
+</div>
+<div class="py-1 px-1.5 text-center bg-surface-container-lowest">
+<span class="font-label-plate text-label-plate text-inverse-surface tracking-wider block">ABC-1D23</span>
+</div>
+</div>
+<div class="flex flex-col items-end text-right">
+<div class="flex items-center gap-1 bg-secondary-container px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] text-on-secondary-container">done_all</span>
+<span class="font-label-tag text-label-tag text-on-secondary-container uppercase">Pronto p/ Entrega</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> 11:00
+          </span>
+</div>
+</div>
+<div class="flex items-start justify-between gap-space-sm pt-0.5">
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Toyota Corolla Preto</h3>
+<span class="inline-block mt-0.5 font-label-tag text-label-tag text-primary bg-surface-container-low px-2 py-0.5 rounded">
+            Polimento Técnico
+          </span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-numeral text-label-numeral text-primary">R$ 180,00</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Aguardando Pagto</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="h-12 bg-primary text-on-primary active:bg-primary-container font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>Cobrar</span>
+</button>
+<button class="h-12 bg-surface-container text-on-surface-variant active:bg-surface-container-high font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">mark_chat_unread</span>
+<span>WhatsApp</span>
+</button>
+</div>
+</div>
+<!-- Card 4: Aguardando (In Waiting Queue) -->
+<div class="car-card relative bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm" data-status="aguardando">
+<div class="flex items-start justify-between gap-space-sm">
+<!-- Mercosul Plate Badge -->
+<div class="shrink-0 w-28 bg-surface-container-lowest rounded shadow-sm overflow-hidden">
+<div class="bg-[#003399] px-1 py-0.5 flex items-center justify-between text-on-primary">
+<span class="text-[8px] font-black tracking-widest leading-none">BRASIL</span>
+<div class="flex items-center gap-0.5">
+<span class="w-1.5 h-1 bg-[#228844] rounded-[0.5px] block"></span>
+<span class="w-1 h-1 bg-[#ffcc00] rounded-[0.5px] block"></span>
+</div>
+</div>
+<div class="py-1 px-1.5 text-center bg-surface-container-lowest">
+<span class="font-label-plate text-label-plate text-inverse-surface tracking-wider block">PLX-9J44</span>
+</div>
+</div>
+<div class="flex flex-col items-end text-right">
+<div class="flex items-center gap-1 bg-tertiary-fixed px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] text-on-tertiary-fixed">hourglass_top</span>
+<span class="font-label-tag text-label-tag text-on-tertiary-fixed uppercase">Fila de Espera</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> 11:45
+          </span>
+</div>
+</div>
+<div class="flex items-start justify-between gap-space-sm pt-0.5">
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">VW T-Cross Cinza</h3>
+<span class="inline-block mt-0.5 font-label-tag text-label-tag text-primary bg-surface-container-low px-2 py-0.5 rounded">
+            Higienização Interna
+          </span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-numeral text-label-numeral text-primary">R$ 120,00</span>
+<span class="block font-body-sm text-body-sm text-on-surface-variant">Pátio Entrada</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="h-12 bg-secondary-fixed text-on-secondary-fixed active:bg-secondary-fixed-dim font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>Iniciar Box</span>
+</button>
+<button class="h-12 bg-surface-container text-on-surface-variant active:bg-surface-container-high font-label-button text-label-button rounded-lg flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+<span>Opções</span>
+</button>
+</div>
+</div>
+<!-- Card 5: Pago (Completed and Paid) -->
+<div class="car-card relative bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm opacity-90" data-status="pago">
+<div class="flex items-start justify-between gap-space-sm">
+<!-- Mercosul Plate Badge -->
+<div class="shrink-0 w-28 bg-surface-container-lowest rounded shadow-sm overflow-hidden">
+<div class="bg-[#003399] px-1 py-0.5 flex items-center justify-between text-on-primary">
+<span class="text-[8px] font-black tracking-widest leading-none">BRASIL</span>
+<div class="flex items-center gap-0.5">
+<span class="w-1.5 h-1 bg-[#228844] rounded-[0.5px] block"></span>
+<span class="w-1 h-1 bg-[#ffcc00] rounded-[0.5px] block"></span>
+</div>
+</div>
+<div class="py-1 px-1.5 text-center bg-surface-container-lowest">
+<span class="font-label-plate text-label-plate text-inverse-surface tracking-wider block">HYU-8B15</span>
+</div>
+</div>
+<div class="flex flex-col items-end text-right">
+<div class="flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] text-primary">verified</span>
+<span class="font-label-tag text-label-tag text-primary uppercase">Pago &amp; Liberado</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">schedule</span> 08:45
+          </span>
+</div>
+</div>
+<div class="flex items-start justify-between gap-space-sm pt-0.5">
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Hyundai HB20 Vermelho</h3>
+<span class="inline-block mt-0.5 font-label-tag text-label-tag text-primary bg-surface-container-low px-2 py-0.5 rounded">
+            Lavagem Simples
+          </span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-numeral text-label-numeral text-secondary">R$ 55,00</span>
+<span class="block font-body-sm text-body-sm text-secondary font-bold">Pago via Pix</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 text-on-surface-variant">
+<span class="font-body-sm text-body-sm flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span> Recibo enviado
+        </span>
+<button class="h-10 px-3 bg-surface-container text-on-surface font-label-tag text-label-tag rounded-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span> Ver Detalhes
+        </button>
+</div>
+</div>
+</div>
+<!-- Operational Yard Micro Tip / Delight Banner -->
+<div class="rounded-xl bg-surface-container-low p-space-md flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[22px]">water_drop</span>
+</div>
+<div class="min-w-0">
+<p class="font-body-lg text-body-lg text-primary leading-tight">Clima Favorável</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sem previsão de chuva para hoje em sua região. Pátio operando a 85%.</p>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const filterButtons = document.querySelectorAll('.filter-chip');
+    const cards = document.querySelectorAll('.car-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Reset styling on all filter buttons
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          b.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+        });
+
+        // Set active style on tapped button
+        btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+        btn.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+
+        // Filter cars
+        cards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-status') === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    const newAppointmentBtn = document.getElementById('btnNovoAgendamento');
+    if (newAppointmentBtn) {
+      newAppointmentBtn.addEventListener('click', () => {
+        // Quick visual microfeedback
+        newAppointmentBtn.style.transform = 'scale(0.97)';
+        setTimeout(() => {
+          newAppointmentBtn.style.transform = 'scale(1)';
+        }, 120);
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,109,119,0.08)]" data-active-classes="text-primary font-bold bg-surface-container-low"><div class="grid grid-cols-2 h-16 px-gutter items-center gap-space-sm max-w-md mx-auto"><a aria-current="page" class="flex items-center justify-center gap-space-sm h-12 rounded-xl transition-colors text-primary font-bold bg-surface-container-low" data-path="hoje" href="#"><span class="material-symbols-outlined text-[24px]">local_car_wash</span><span class="font-label-button text-label-button">Hoje</span></a><a class="flex items-center justify-center gap-space-sm h-12 rounded-xl text-on-surface-variant transition-colors" data-path="estoque" href="#"><span class="material-symbols-outlined text-[24px]">inventory_2</span><span class="font-label-button text-label-button">Estoque</span></a></div></nav></body></html>
