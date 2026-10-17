@@ -65,7 +65,7 @@ export function Stock() {
         </div>
       )}
 
-      <ul className="space-y-3">
+      <ul className="grid gap-3 xl:grid-cols-2">
         {statuses.map((s) => (
           <li key={s.product.id}>
             <ProductCard
@@ -98,7 +98,7 @@ function ProductCard({ s, onRestock, onAdjust, onReceive }: CardProps) {
   return (
     <article className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line" data-level={level}>
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-extrabold uppercase tracking-wide text-muted">{product.category}</p>
+        <p className="text-sm font-semibold text-muted">{product.category}</p>
         <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-extrabold ${style.chip}`}>{daysText(days)}</span>
       </div>
       <h2 className="mt-1 text-lg font-extrabold leading-snug text-ink">{product.name}</h2>

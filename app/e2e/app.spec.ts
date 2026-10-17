@@ -6,7 +6,7 @@ async function open(page: Page, hash = '') {
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
-  await page.goto(`/#/${hash}`)
+  await page.goto(`/app${hash ? `/${hash}` : ''}`)
   await page.getByRole('heading', { level: 1 }).waitFor()
   return errors
 }
@@ -18,10 +18,11 @@ async function noHorizontalScroll(page: Page) {
 test.describe('Hoje', () => {
   test('mostra o resumo do dia calculado a partir dos 8 carros de exemplo', async ({ page }, info) => {
     const errors = await open(page)
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('8 carros')
-    const summary = page.locator('section[aria-labelledby="day-title"]')
-    await expect(summary).toContainText(money('670,00'))
-    const toCollect = summary.getByText('A cobrar', { exact: true }).locator('..')
+    const desktop = info.project.name.startsWith('desktop')
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(desktop ? 'Hoje' : '8 carros')
+    await expect(page.locator('main')).toContainText('8 carros')
+    await expect(page.locator('main')).toContainText(money('670,00'))
+    const toCollect = page.getByText('A cobrar', { exact: true }).first().locator('..')
     await expect(toCollect).toContainText(money('50,00'))
     await expect(page.getByRole('article')).toHaveCount(8)
     await noHorizontalScroll(page)
@@ -43,11 +44,12 @@ test.describe('Hoje', () => {
     await page.getByRole('dialog', { name: 'Cobrar' }).getByRole('button', { name: /Pix/ }).click()
     await expect(gol).toHaveAttribute('data-status', 'pago')
     await expect(page.getByRole('status').filter({ hasText: 'pago via Pix' })).toBeVisible()
-    const received = page.locator('section[aria-labelledby="day-title"]').getByText('Recebido', { exact: true }).locator('..')
+    const received = page.getByText('Recebido', { exact: true }).first().locator('..')
     await expect(received).toContainText(money('100,00'))
   })
 
-  test('os carros que pedem ação vêm primeiro', async ({ page }) => {
+  test('os carros que pedem ação vêm primeiro (celular)', async ({ page }, info) => {
+    test.skip(info.project.name.startsWith('desktop'), 'a lista ordenada é da versão de celular')
     await open(page)
     const cars = page.getByRole('article')
     await expect(cars.nth(0)).toHaveAttribute('data-status', 'lavando')
@@ -79,7 +81,20 @@ test.describe('Hoje', () => {
     expect(await level()).toBe(before)
   })
 
-  test('filtra por status e mostra estado vazio', async ({ page }) => {
+  test('quadro do computador: uma coluna por etapa, com contagem e total', async ({ page }, info) => {
+    test.skip(!info.project.name.startsWith('desktop'), 'o quadro é da versão de computador')
+    await open(page)
+    for (const [name, count] of [['Aguardando', 4], ['Lavando', 2], ['Pronto', 1], ['Pago', 1]] as const) {
+      const column = page.getByRole('region', { name })
+      await expect(column.getByRole('article')).toHaveCount(count)
+    }
+    await expect(page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link', { name: /Hoje/ })).toContainText('1')
+    await page.getByRole('region', { name: 'Aguardando' }).getByRole('button', { name: /Iniciar lavagem/ }).first().click()
+    await expect(page.getByRole('region', { name: 'Lavando' }).getByRole('article')).toHaveCount(3)
+  })
+
+  test('filtra por status e mostra estado vazio', async ({ page }, info) => {
+    test.skip(info.project.name.startsWith('desktop'), 'os filtros são da versão de celular')
     await open(page)
     await page.getByRole('button', { name: /^Lavando/ }).click()
     await expect(page.getByRole('article')).toHaveCount(2)
@@ -101,7 +116,7 @@ test.describe('Hoje', () => {
     await sheet.getByRole('radio', { name: /Polimento/ }).click()
     await sheet.getByRole('button', { name: /Confirmar agendamento · R\$\s*160,00/ }).click()
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('9 carros')
+    await expect(page.locator('main')).toContainText('9 carros')
     const novo = page.getByRole('article', { name: /ZZZ9Y88/ })
     await expect(novo).toContainText('Corolla')
     await expect(novo).toHaveAttribute('data-status', 'aguardando')
@@ -177,7 +192,9 @@ test.describe('Estoque', () => {
 test.describe('Meu mês', () => {
   test('mostra totais, ranking e consumo; navega para o mês anterior', async ({ page }, info) => {
     const errors = await open(page, 'mes')
-    await expect(page.getByText('Recebido', { exact: true })).toBeVisible()
+    await expect(page.getByRole('term').filter({ hasText: 'Recebido' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Vendido por dia' })).toBeVisible()
+    await expect(page.getByRole('img', { name: /Vendido por dia/ })).toBeVisible()
     await expect(page.getByRole('heading', { name: 'O que mais sai' })).toBeVisible()
     await expect(page.getByRole('heading', { name: 'Produto consumido no mês' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Próximo mês' })).toBeDisabled()
@@ -195,4 +212,54 @@ test('navegação por abas e sem rolagem horizontal em todas as telas', async ({
     await page.getByRole('link', { name }).click()
     await noHorizontalScroll(page)
   }
+})
+
+test.describe('Páginas e rotas', () => {
+  test('a landing apresenta o produto e leva à demonstração', async ({ page }, info) => {
+    const errors: string[] = []
+    page.on('pageerror', (e) => errors.push(e.message))
+    page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
+    await page.goto('/')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('quem está na fila')
+    await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4)
+    await noHorizontalScroll(page)
+    for (const img of await page.locator('img[src^="/landing/"]').all()) {
+      await img.scrollIntoViewIfNeeded()
+      await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true)
+    }
+    await page.screenshot({ path: `e2e/.shots/landing-${info.project.name}.png`, fullPage: true })
+    await page.getByRole('link', { name: 'Abrir a demonstração' }).first().click()
+    await expect(page).toHaveURL(/\/app$/)
+    expect(errors).toEqual([])
+  })
+
+  test('a calculadora da landing usa as regras do aplicativo', async ({ page }) => {
+    await page.goto('/#calculadora')
+    const calc = page.locator('#calculadora')
+    await calc.scrollIntoViewIfNeeded()
+    // 5 L, 12 lavagens/dia, 100 ml: 5000 / 1200 = 4 dias → crítico
+    await expect(calc).toContainText('4')
+    await expect(calc).toContainText('Nível crítico')
+    await calc.getByLabel('Quanto tem no estoque').fill('10')
+    await expect(calc).toContainText('Atenção')
+    await calc.getByLabel('Lavagens por dia').fill('2')
+    await expect(calc).toContainText('Estoque tranquilo')
+  })
+
+  test('links antigos com # levam ao aplicativo e rotas desconhecidas voltam à landing', async ({ page }) => {
+    await page.goto('/#/estoque')
+    await expect(page).toHaveURL(/\/app\/estoque$/)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Estoque')
+    await page.goto('/#/mes')
+    await expect(page).toHaveURL(/\/app\/mes$/)
+    await page.goto('/rota-que-nao-existe')
+    await expect(page).toHaveURL(/\/$/)
+  })
+
+  test('abrir direto uma tela do aplicativo funciona (recarregar em /app/estoque)', async ({ page }) => {
+    await page.goto('/app/estoque')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Estoque')
+    await page.reload()
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Estoque')
+  })
 })

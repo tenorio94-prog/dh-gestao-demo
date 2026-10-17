@@ -2,11 +2,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { addMonths, monthLabel, monthOf, saoPauloDay } from '../domain/dates'
 import { formatBRL, formatLiters } from '../domain/format'
-import { monthSummary } from '../domain/rules'
+import { dailySales, monthSummary } from '../domain/rules'
 import { useStore } from '../store/useStore'
+import { DailySalesChart } from './DailySalesChart'
 
 export function Month() {
-  const current = monthOf(saoPauloDay())
+  const today = saoPauloDay()
+  const current = monthOf(today)
   const [month, setMonth] = useState(current)
   const appointments = useStore((s) => s.appointments)
   const services = useStore((s) => s.services)
@@ -16,13 +18,14 @@ export function Month() {
     () => monthSummary(appointments, services, products, month),
     [appointments, services, products, month],
   )
+  const days = useMemo(() => dailySales(appointments, month, today), [appointments, month, today])
   const name = (id: string) => services.find((s) => s.id === id)?.name ?? id
   const productName = (id: string) => products.find((p) => p.id === id)?.name ?? id
   const prev = addMonths(month, -1)
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between lg:justify-start lg:gap-4">
         <button
           type="button"
           aria-label="Mês anterior"
@@ -31,7 +34,7 @@ export function Month() {
         >
           <ChevronLeft />
         </button>
-        <h1 className="text-center text-2xl font-extrabold text-brand-deep">{monthLabel(month)}</h1>
+        <h1 className="text-center text-2xl font-extrabold text-brand-deep lg:min-w-64 lg:text-3xl">{monthLabel(month)}</h1>
         <button
           type="button"
           aria-label="Próximo mês"
@@ -50,13 +53,19 @@ export function Month() {
         </div>
       ) : (
         <>
-          <dl className="grid grid-cols-2 gap-3">
+          <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
             <Tile label="Recebido" value={formatBRL(summary.receivedCents)} note="só o que já foi pago" tone="green" />
-            <Tile label="A receber" value={formatBRL(summary.receivableCents)} note="prontos ainda sem pagar" tone="amber" />
+            <Tile label="A cobrar" value={formatBRL(summary.receivableCents)} note="prontos ainda sem pagar" tone="amber" />
             <Tile label="Vendido" value={formatBRL(summary.soldCents)} note="soma dos carros prontos" />
             <Tile label="Carros" value={String(summary.count)} note="lavagens concluídas" />
           </dl>
 
+          <section className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line">
+            <h2 className="text-lg font-extrabold text-brand-deep">Vendido por dia</h2>
+            <DailySalesChart days={days} />
+          </section>
+
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
           <section className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line">
             <h2 className="text-lg font-extrabold text-brand-deep">O que mais sai</h2>
             <ol className="mt-2 space-y-2">
@@ -83,6 +92,7 @@ export function Month() {
               ))}
             </ul>
           </section>
+          </div>
         </>
       )}
     </div>
@@ -93,7 +103,7 @@ function Tile({ label, value, note, tone }: { label: string; value: string; note
   const color = tone === 'green' ? 'text-st-done' : tone === 'amber' ? 'text-st-wait' : 'text-brand-deep'
   return (
     <div className="rounded-3xl bg-card p-4 shadow-rest ring-1 ring-line">
-      <dt className="text-xs font-extrabold uppercase tracking-wide text-muted">{label}</dt>
+      <dt className="text-sm font-semibold text-muted">{label}</dt>
       <dd className={`mt-1 text-2xl font-extrabold ${color}`}>
         {value}
         <span className="mt-1 block text-xs text-muted">{note}</span>

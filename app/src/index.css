@@ -1,11 +1,13 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/plus-jakarta-sans';
 @import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/unbounded';
 
 /* Tokens da identidade DH Gestão (base: Stitch "Hydro Fleet Operations", contraste corrigido). */
 @theme {
   --font-sans: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-display: 'Unbounded Variable', 'Plus Jakarta Sans Variable', system-ui, sans-serif;
 
   --color-brand: #006d77;
   --color-brand-deep: #00535b;
@@ -111,4 +113,30 @@ body {
 }
 .toast-in {
   animation: toast-in 180ms ease-out;
+}
+
+/* Painel lateral do computador entra pela direita. */
+@keyframes panel-in {
+  from {
+    translate: 100% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@media (min-width: 1024px) {
+  .sheet-in {
+    animation-name: panel-in;
+  }
+}
+
+/* Abertura da landing: a única entrada animada da página. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+.hero-in {
+  animation: hero-in 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }

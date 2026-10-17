@@ -21,6 +21,11 @@ export function monthOf(day: string): string {
   return day.slice(0, 7)
 }
 
+export function daysInMonth(month: string): number {
+  const [year, mon] = month.split('-').map(Number)
+  return new Date(Date.UTC(year, mon, 0)).getUTCDate()
+}
+
 export function addMonths(month: string, delta: number): string {
   const [year, mon] = month.split('-').map(Number)
   const index = year * 12 + (mon - 1) + delta

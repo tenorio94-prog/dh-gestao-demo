@@ -3,7 +3,7 @@
   "short_name": "DH Gestão",
   "description": "Agenda de lavagens e estoque para lava jato (demonstração).",
   "lang": "pt-BR",
-  "start_url": "/",
+  "start_url": "/app",
   "display": "standalone",
   "background_color": "#f0fbff",
   "theme_color": "#006d77",

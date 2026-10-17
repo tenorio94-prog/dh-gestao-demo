@@ -9,7 +9,7 @@ Estado em 2026-10-17. Fases 1 a 5 do `PLANO.md` **concluídas e publicadas**.
 - **Verificação:** `cd app && npm run check` = tipos + lint + 19 testes unitários + build + 22 testes de tela. Tudo verde.
 - **Deploy:** `cd app && npm run deploy`.
 - **Não feito / desvios do plano:** Codex não foi usado nesta construção (escopo pequeno, preferi escrever direto); teste de ImageGen não foi feito (logo em SVG próprio); 4 arquivos órfãos do scaffold do Vite continuam em `app/` sem versionar (`src/assets/`, `src/App.css`, `public/icons.svg`, `README.md`) porque a remoção foi bloqueada pela proteção do Claude Code. Apagar à mão.
-- **Para quem o link vai:** é público para quem tiver o endereço (sem login). O subdomínio `doce-agenda-local.workers.dev` é o da conta; trocar exigiria domínio próprio.
+- **Para quem o link vai (a landing também é pública, com noindex):** é público para quem tiver o endereço (sem login). O subdomínio `doce-agenda-local.workers.dev` é o da conta; trocar exigiria domínio próprio.
 
 ## Decisões tomadas
 | Decisão | Escolha | Motivo / observação |
@@ -22,6 +22,15 @@ Estado em 2026-10-17. Fases 1 a 5 do `PLANO.md` **concluídas e publicadas**.
 | Hospedagem | Cloudflare, conta do usuário | Login é interativo e feito por ele; publicar só com autorização |
 | Modelos | Sonnet principal; Opus consultor; Codex Sol medium para tarefas fechadas | Hipótese em teste, ver `AGENTS.md` |
 | Imagens | Referência visual via Google Stitch (prompt já entregue); ilustrações via ChatGPT/Codex só sob pedido | Imagem no Codex gasta o saldo de código |
+
+## Rodada 2: landing, desktop e acabamento (2026-10-17)
+- **Rotas:** `/` é a landing; `/app`, `/app/estoque`, `/app/mes` são o aplicativo (BrowserRouter; o fallback de SPA da Cloudflare já cobre links diretos). Links antigos `/#/estoque` e `/#/mes` são redirecionados para `/app/...` em `main.tsx`. `start_url` do manifest passou a `/app`. Rota desconhecida volta para `/`.
+- **Landing** (`app/src/landing/Landing.tsx`, carregada sob demanda): título em Unbounded (letreiro) + Plus Jakarta Sans; abertura com capturas reais do app (`public/landing/`, geradas por `scripts/capture-landing.mjs`); três blocos de funcionalidade alternados; **calculadora "Quantos dias dura o seu produto?"** que usa as mesmas funções `daysRemaining`/`stockLevel` do app; seção honesta "Ainda é um experimento". Sem depoimentos, números ou promessas inventadas. Uma única animação de entrada (abertura).
+- **Desktop (>= 1024 px):** casca própria com barra lateral (avisos: carros para cobrar e produtos críticos), **quadro por etapa** (Aguardando, Lavando, Pronto, Pago) com contagem e total por coluna, faixa de 4 indicadores, painel lateral no lugar da folha de baixo, aviso de "Desfazer" no canto. Celular continua com lista priorizada, folha de baixo e abas.
+- **Meu mês:** gráfico "Vendido por dia" (função `dailySales`, escrita em TDD pelo Codex; tabela equivalente para leitores de tela). Rótulo "A receber" virou "A cobrar" também aqui, para o mesmo termo em todo o app.
+- **Acabamento:** rótulos em caixa-alta e numeração do formulário removidos; botões do quadro empilhados em coluna estreita; cabeçalho da landing no celular sem sobreposição.
+- **Testes:** `npm run check` (tipos, lint, 27 unitários, build, Playwright 360 e 1280 px incluindo a11y de app e landing). Capturas para documentação: `docs/capturas/` (`app/scripts/capture-docs.mjs`).
+- **Descoberto no caminho:** `<table class="sr-only">` não recorta (a tabela estourava a largura no celular); precisa de um `<div class="sr-only">` por fora. O `init` do shadcn continua descartado.
 
 ## Rodada de evolução (2026-10-17, com subagentes)
 Auditoria sob 5 ângulos (produto, visual, UX, acessibilidade, engenharia). Decisões e motivos:

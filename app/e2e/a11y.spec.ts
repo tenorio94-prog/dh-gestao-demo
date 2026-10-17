@@ -14,7 +14,7 @@ test('acessibilidade (axe, WCAG 2.2 AA) em cada tela e painel', async ({ page })
     const issues = await audit(page)
     if (issues.length) found[name] = issues
   }
-  await page.goto('/#/')
+  await page.goto('/app')
   await page.getByRole('heading', { level: 1 }).waitFor()
   await check('Hoje')
   await page.getByRole('button', { name: /Novo agendamento/ }).click()
@@ -32,4 +32,13 @@ test('acessibilidade (axe, WCAG 2.2 AA) em cada tela e painel', async ({ page })
   await check('Meu mês')
   console.log(JSON.stringify(found, null, 2))
   expect(found).toEqual({})
+})
+
+test('acessibilidade (axe, WCAG 2.2 AA) na landing', async ({ page }) => {
+  await page.setViewportSize({ width: page.viewportSize()!.width, height: 2000 })
+  await page.goto('/')
+  await page.getByRole('heading', { level: 1 }).waitFor()
+  const issues = await audit(page)
+  console.log(JSON.stringify(issues, null, 2))
+  expect(issues).toEqual([])
 })

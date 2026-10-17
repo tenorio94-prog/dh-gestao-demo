@@ -19,7 +19,7 @@ export function RestockSheet({ status, onClose }: { status: ProductStatus; onClo
     <Sheet title="Pedir reposição" onClose={onClose}>
       <div className="space-y-4 pb-2">
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <p className="text-xs font-extrabold uppercase tracking-wide text-muted">{product.category}</p>
+          <p className="text-sm font-semibold text-muted">{product.category}</p>
           <h3 className="text-xl font-extrabold text-ink">{product.name}</h3>
           <p className="mt-1 text-sm text-muted">
             Restam {formatLiters(product.stockMl)}
@@ -84,7 +84,7 @@ export function RestockSheet({ status, onClose }: { status: ProductStatus; onClo
         </section>
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <h3 className="text-xs font-extrabold uppercase tracking-wide text-muted">Mensagem pronta</h3>
+          <h3 className="text-sm font-semibold text-muted">Mensagem pronta</h3>
           <p className="mt-2 rounded-2xl bg-canvas p-3 text-ink-soft">{message}</p>
         </section>
 

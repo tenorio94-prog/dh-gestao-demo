@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { services } from '../data/seed'
-import { addDays, addMonths, dayLabel, monthLabel, saoPauloDay } from './dates'
+import { addDays, addMonths, dayLabel, daysInMonth, monthLabel, saoPauloDay } from './dates'
 import { formatBRL, isValidPlate, normalizePlate, whatsappLink, whatsappNumber } from './format'
 import {
   daySummary,
+  dailySales,
   daysRemaining,
   deductStock,
   finishWash,
@@ -163,6 +164,68 @@ describe('estoque', () => {
   it('sugere galões até o estoque cheio, no mínimo um', () => {
     expect(suggestedContainers(shampoo)).toBe(2)
     expect(suggestedContainers({ ...shampoo, stockMl: 9900 })).toBe(1)
+  })
+})
+
+describe('vendas por dia', () => {
+  it('calcula quantos dias há em fevereiro comum e bissexto', () => {
+    expect(daysInMonth('2026-02')).toBe(28)
+    expect(daysInMonth('2028-02')).toBe(29)
+  })
+
+  it.each([
+    ['2026-09', 30],
+    ['2026-10', 31],
+  ])('inclui todos os dias do mês passado %s (%i dias) e soma como monthSummary', (month, length) => {
+    const list = [
+      car({ id: '1', date: `${month}-01`, status: 'pago', valueCents: 5000 }),
+      car({ id: '2', date: `${month}-15`, status: 'pronto', valueCents: 8500 }),
+      car({ id: 'fora', date: '2026-11-01', status: 'pago', valueCents: 99999 }),
+    ]
+    const days = dailySales(list, month, '2026-11-17')
+    expect(days).toHaveLength(length)
+    expect(days[0].date).toBe(`${month}-01`)
+    expect(days.at(-1)?.date).toBe(`${month}-${length}`)
+    expect(days.reduce((sum, day) => sum + day.soldCents, 0)).toBe(
+      monthSummary(list, services, [], month).soldCents,
+    )
+  })
+
+  it('corta o mês corrente em hoje, incluindo hoje e ignorando amanhã', () => {
+    const days = dailySales([
+      car({ id: 'ontem', date: '2026-10-16', status: 'pago', valueCents: 1000 }),
+      car({ id: 'hoje', date: '2026-10-17', status: 'pronto', valueCents: 2000 }),
+      car({ id: 'amanha', date: '2026-10-18', status: 'pago', valueCents: 3000 }),
+    ], '2026-10', '2026-10-17')
+    expect(days).toHaveLength(17)
+    expect(days.at(-1)).toMatchObject({ date: '2026-10-17', soldCents: 2000, receivedCents: 0 })
+    expect(days.reduce((sum, day) => sum + day.soldCents, 0)).toBe(3000)
+  })
+
+  it('preenche dias vazios com zero e só conta pronto/pago como vendido e pago como recebido', () => {
+    const days = dailySales([
+      car({ id: 'aguardando', date: '2026-10-02', status: 'aguardando', valueCents: 1000 }),
+      car({ id: 'lavando', date: '2026-10-03', status: 'lavando', valueCents: 2000 }),
+      car({ id: 'pronto', date: '2026-10-05', status: 'pronto', valueCents: 3000 }),
+      car({ id: 'pago-1', date: '2026-10-05', status: 'pago', valueCents: 4000 }),
+      car({ id: 'pago-2', date: '2026-10-05', status: 'pago', valueCents: 1500 }),
+    ], '2026-10', '2026-10-05')
+    expect(days[0]).toMatchObject({ soldCents: 0, receivedCents: 0 })
+    expect(days[1]).toMatchObject({ soldCents: 0, receivedCents: 0 })
+    expect(days[2]).toMatchObject({ soldCents: 0, receivedCents: 0 })
+    expect(days[3]).toMatchObject({ soldCents: 0, receivedCents: 0 })
+    expect(days[4]).toMatchObject({ soldCents: 8500, receivedCents: 5500 })
+  })
+
+  it('gera fevereiro comum e bissexto até o último dia e inclui venda no dia 29', () => {
+    const common = dailySales([], '2026-02', '2026-03-01')
+    const leap = dailySales([
+      car({ id: 'leap-day', date: '2028-02-29', status: 'pago', valueCents: 2500 }),
+    ], '2028-02', '2028-03-01')
+    expect(common).toHaveLength(28)
+    expect(common.at(-1)?.date).toBe('2026-02-28')
+    expect(leap).toHaveLength(29)
+    expect(leap.at(-1)).toEqual({ date: '2028-02-29', soldCents: 2500, receivedCents: 2500 })
   })
 })
 

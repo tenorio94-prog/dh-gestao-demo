@@ -1,4 +1,4 @@
-import { addDays, monthOf } from './dates'
+import { addDays, daysInMonth, monthOf } from './dates'
 import type { Appointment, Cents, PayMethod, Product, Service, Status, StockLevel } from './types'
 
 export const STATUS_ORDER: Status[] = ['aguardando', 'lavando', 'pronto', 'pago']
@@ -166,6 +166,32 @@ export interface MonthSummary {
   receivableCents: Cents
   topServices: { serviceId: string; count: number }[]
   consumption: { productId: string; ml: number }[]
+}
+
+export interface DailySale {
+  date: string
+  soldCents: Cents
+  receivedCents: Cents
+}
+
+export function dailySales(appointments: Appointment[], month: string, today: string): DailySale[] {
+  const lastDay = month === monthOf(today) ? Number(today.slice(8, 10)) : daysInMonth(month)
+  const sales = Array.from({ length: lastDay }, (_, index) => ({
+    date: `${month}-${String(index + 1).padStart(2, '0')}`,
+    soldCents: 0,
+    receivedCents: 0,
+  }))
+
+  for (const appointment of appointments) {
+    if (monthOf(appointment.date) !== month || !isSold(appointment)) continue
+    const dayIndex = Number(appointment.date.slice(8, 10)) - 1
+    const day = sales[dayIndex]
+    if (!day) continue
+    day.soldCents += appointment.valueCents
+    if (appointment.status === 'pago') day.receivedCents += appointment.valueCents
+  }
+
+  return sales
 }
 
 export function monthSummary(

@@ -18,10 +18,10 @@ export function UndoToast() {
 
   if (!undo) return null
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-24 z-20 flex justify-center px-4">
+    <div className="pointer-events-none fixed inset-x-0 bottom-24 z-20 flex justify-center px-4 lg:bottom-6 lg:justify-start lg:pl-[18.5rem]">
       <div
         role="status"
-        className="toast-in pointer-events-auto flex w-full max-w-lg items-center justify-between gap-2 rounded-2xl bg-ink py-1.5 pl-4 pr-1.5 text-white shadow-2xl"
+        className="toast-in pointer-events-auto flex w-full max-w-lg lg:max-w-md items-center justify-between gap-2 rounded-2xl bg-ink py-1.5 pl-4 pr-1.5 text-white shadow-2xl"
       >
         <p className="text-sm font-bold">{undo.message}</p>
         <button

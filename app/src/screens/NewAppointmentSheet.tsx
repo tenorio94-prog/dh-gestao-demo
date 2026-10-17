@@ -68,8 +68,8 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
     <Sheet title="Novo agendamento" onClose={onClose}>
       <div className="space-y-4 pb-2">
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <label htmlFor="plate" className="text-xs font-extrabold uppercase tracking-wide text-muted">
-            1. Placa do veículo
+          <label htmlFor="plate" className="text-sm font-bold text-ink-soft">
+            Placa do veículo
           </label>
           <input
             id="plate"
@@ -95,8 +95,8 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <label htmlFor="model" className="text-xs font-extrabold uppercase tracking-wide text-muted">
-            2. Modelo e cor
+          <label htmlFor="model" className="text-sm font-bold text-ink-soft">
+            Modelo e cor
           </label>
           <input
             id="model"
@@ -136,7 +136,7 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <h3 className="text-xs font-extrabold uppercase tracking-wide text-muted">3. Serviço</h3>
+          <h3 className="text-sm font-bold text-ink-soft">Serviço</h3>
           <div className="mt-2 space-y-2" role="radiogroup" aria-label="Serviço">
             {services.map((s) => (
               <button
@@ -162,8 +162,8 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <label htmlFor="time" className="text-xs font-extrabold uppercase tracking-wide text-muted">
-            4. Horário
+          <label htmlFor="time" className="text-sm font-bold text-ink-soft">
+            Horário
           </label>
           <div className="mt-2 flex items-center gap-3">
             <input
@@ -180,7 +180,7 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <h3 className="text-xs font-extrabold uppercase tracking-wide text-muted">5. Valor cobrado</h3>
+          <h3 className="text-sm font-bold text-ink-soft">Valor cobrado</h3>
           <div className="mt-2 flex items-center justify-between rounded-2xl bg-aqua-wash p-2">
             <button
               type="button"
@@ -216,8 +216,8 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
-          <label htmlFor="phone" className="text-xs font-extrabold uppercase tracking-wide text-muted">
-            6. WhatsApp do cliente (opcional)
+          <label htmlFor="phone" className="text-sm font-bold text-ink-soft">
+            WhatsApp do cliente (opcional)
           </label>
           <input
             id="phone"

@@ -20,6 +20,7 @@ export function Sheet({ title, onClose, children }: Props) {
   const startY = useRef(0)
 
   function down(event: PointerEvent<HTMLDivElement>) {
+    if (window.matchMedia('(min-width: 1024px)').matches) return // painel lateral não arrasta
     startY.current = event.clientY
     setDragging(true)
     event.currentTarget.setPointerCapture(event.pointerId)
@@ -41,7 +42,7 @@ export function Sheet({ title, onClose, children }: Props) {
         <Dialog.Content
           aria-describedby={undefined}
           style={{ transform: offset ? `translateY(${offset}px)` : undefined, transition: dragging ? 'none' : undefined }}
-          className="sheet-in fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[92dvh] w-full max-w-lg flex-col rounded-t-3xl bg-canvas shadow-2xl outline-none"
+          className="sheet-in fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[92dvh] w-full max-w-lg flex-col rounded-t-3xl bg-canvas shadow-2xl outline-none lg:inset-y-0 lg:left-auto lg:right-0 lg:mx-0 lg:h-dvh lg:max-h-none lg:max-w-md lg:rounded-none lg:rounded-l-3xl"
         >
           <div
             onPointerDown={down}
@@ -50,8 +51,8 @@ export function Sheet({ title, onClose, children }: Props) {
             onPointerCancel={up}
             className="touch-none select-none"
           >
-            <div className="mx-auto mt-2 h-1.5 w-12 rounded-full bg-line" aria-hidden="true" />
-            <div className="flex items-center justify-between px-5 pb-2 pt-2">
+            <div className="mx-auto mt-2 h-1.5 w-12 rounded-full bg-line lg:hidden" aria-hidden="true" />
+            <div className="flex items-center justify-between px-5 pb-2 pt-2 lg:pt-5">
               <Dialog.Title className="text-xl font-extrabold text-brand-deep">{title}</Dialog.Title>
               <Dialog.Close
                 aria-label="Fechar"
