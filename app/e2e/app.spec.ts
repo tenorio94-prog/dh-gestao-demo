@@ -220,15 +220,16 @@ test.describe('Páginas e rotas', () => {
     page.on('pageerror', (e) => errors.push(e.message))
     page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
     await page.goto('/')
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('quem está na fila')
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('sem produto no meio do dia')
     await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4)
     await noHorizontalScroll(page)
     for (const img of await page.locator('img[src^="/landing/"]').all()) {
       await img.scrollIntoViewIfNeeded()
       await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true)
     }
+    await expect(page.getByRole('link', { name: 'Falar no WhatsApp' }).first()).toHaveAttribute('href', /^https:\/\/wa\.me\/5581999476189\?text=/)
     await page.screenshot({ path: `e2e/.shots/landing-${info.project.name}.png`, fullPage: true })
-    await page.getByRole('link', { name: 'Abrir a demonstração' }).first().click()
+    await page.getByRole('link', { name: 'Ver com carros de exemplo' }).first().click()
     await expect(page).toHaveURL(/\/app$/)
     expect(errors).toEqual([])
   })
@@ -244,6 +245,18 @@ test.describe('Páginas e rotas', () => {
     await expect(calc).toContainText('Atenção')
     await calc.getByLabel('Lavagens por dia').fill('2')
     await expect(calc).toContainText('Estoque tranquilo')
+  })
+
+  test('a calculadora mostra o faturamento em risco e leva a conta ao WhatsApp', async ({ page }) => {
+    await page.goto('/')
+    const calc = page.locator('#calculadora')
+    await calc.scrollIntoViewIfNeeded()
+    // 12 lavagens × R$ 60 × 2 dias = R$ 1.440
+    await expect(calc).toContainText('1.440,00')
+    await calc.getByLabel('Valor médio de uma lavagem').fill('100')
+    await expect(calc).toContainText('2.400,00')
+    const href = await calc.getByRole('link', { name: /Levar essa conta/ }).getAttribute('href')
+    expect(decodeURIComponent(href ?? '')).toContain('2.400,00')
   })
 
   test('links antigos com # levam ao aplicativo e rotas desconhecidas voltam à landing', async ({ page }) => {

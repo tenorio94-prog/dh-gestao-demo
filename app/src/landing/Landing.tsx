@@ -1,16 +1,21 @@
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, MessageCircle } from 'lucide-react'
 import { useEffect, useId, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { formatBRL } from '../domain/format'
 import { daysRemaining, stockLevel } from '../domain/rules'
 import type { StockLevel } from '../domain/types'
 import { Logo } from '../ui/Logo'
+import { CONTACT_PHONE_LABEL, GENERIC_MESSAGE, calcMessage, contactLink, revenueAtRisk } from './contact'
+
+const ctaSecondary =
+  'inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl px-4 font-bold text-white underline decoration-aqua decoration-2 underline-offset-4 hover:bg-white/10'
 
 const cta =
   'inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-cta px-6 text-base font-bold text-white shadow-cta transition-colors hover:bg-cta-deep'
 
 export default function Landing() {
   useEffect(() => {
-    document.title = 'DH Gestão · agenda, cobrança e estoque para lava jato'
+    document.title = 'DH Gestão · aviso de produto acabando para lava jato'
   }, [])
 
   return (
@@ -31,9 +36,15 @@ export default function Landing() {
       <footer className="bg-brand-deep px-5 py-10 text-aqua-soft">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <Logo onDark />
-          <p className="max-w-md text-sm">
-            Projeto experimental. Todos os dados mostrados são fictícios e ficam salvos apenas no seu navegador.
-          </p>
+          <div className="max-w-md space-y-2 text-sm">
+            <p>Projeto experimental. Todos os dados mostrados são fictícios e ficam salvos apenas no seu navegador.</p>
+            <p>
+              Dúvidas ou quer testar no seu lava jato?{' '}
+              <a href={contactLink(GENERIC_MESSAGE)} target="_blank" rel="noreferrer" className="font-bold text-white underline underline-offset-4">
+                WhatsApp {CONTACT_PHONE_LABEL}
+              </a>
+            </p>
+          </div>
         </div>
       </footer>
     </div>
@@ -55,8 +66,8 @@ function Hero() {
             Calculadora
           </a>
           <Link to="/app" className="inline-flex min-h-12 items-center whitespace-nowrap rounded-xl bg-white px-4 font-bold text-brand-deep hover:bg-aqua-soft">
-            <span className="sm:hidden">Demonstração</span>
-            <span className="hidden sm:inline">Abrir demonstração</span>
+            <span className="sm:hidden">Ver exemplo</span>
+            <span className="hidden sm:inline">Ver com carros de exemplo</span>
           </Link>
         </nav>
       </div>
@@ -64,22 +75,22 @@ function Hero() {
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-28 pt-8 lg:grid-cols-[1fr_1.1fr] lg:pb-36 lg:pt-14">
         <div className="hero-in">
           <h1 className="font-display text-[clamp(1.75rem,3.5vw,2.85rem)] font-bold leading-[1.1] tracking-tight">
-            Saiba quem está na fila, quanto falta cobrar e quando o produto acaba.
+            Seu lava jato fica sem produto no meio do dia? O DH Gestão avisa antes de acabar.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-aqua-soft">
-            O DH Gestão junta a agenda do pátio, a cobrança e o estoque num só lugar. No celular de quem está lavando e
-            no computador de quem administra.
+            Mostra quantos dias de produto ainda restam, pede a reposição ao fornecedor pelo WhatsApp e ainda controla
+            a fila de carros e quanto falta cobrar.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link to="/app" className={cta}>
-              Abrir a demonstração <ArrowRight size={20} aria-hidden="true" />
+              Ver com carros de exemplo <ArrowRight size={20} aria-hidden="true" />
             </Link>
-            <a href="#como-funciona" className="inline-flex min-h-14 items-center rounded-2xl px-4 font-bold text-white underline decoration-aqua decoration-2 underline-offset-4 hover:bg-white/10">
-              Ver como funciona
+            <a href={contactLink(GENERIC_MESSAGE)} target="_blank" rel="noreferrer" className={ctaSecondary}>
+              <MessageCircle size={20} aria-hidden="true" /> Falar no WhatsApp
             </a>
           </div>
           <p className="mt-5 text-sm text-aqua-soft/90">
-            Demonstração experimental, com dados de exemplo. Sem cadastro e sem login.
+            Leva 1 minuto, direto no celular. Sem cadastro, sem login e sem custo. Os dados são de exemplo.
           </p>
         </div>
 
@@ -216,23 +227,31 @@ function Calculator() {
   const [liters, setLiters] = useState(5)
   const [washes, setWashes] = useState(12)
   const [mlPerWash, setMlPerWash] = useState(100)
+  const [ticket, setTicket] = useState(60)
+  const [daysWithoutProduct, setDaysWithoutProduct] = useState(2)
 
   const days = daysRemaining(liters * 1000, washes * mlPerWash)
   const level = stockLevel(days)
   const text = LEVEL_TEXT[level]
   // Barra proporcional a 30 dias, só para dar noção visual.
   const fill = Math.min(100, Math.round(((days ?? 0) / 30) * 100))
+  const atRisk = revenueAtRisk(washes, ticket, daysWithoutProduct)
+  const message = calcMessage({ liters, washes, mlPerWash, days, ticket, daysWithoutProduct })
 
   return (
     <section id="calculadora" aria-labelledby="calc-titulo" className="bg-aqua-wash">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 lg:grid-cols-[1fr_1.1fr] lg:py-28">
         <div>
           <h2 id="calc-titulo" className="font-display text-[clamp(1.5rem,3.2vw,2.4rem)] font-extrabold leading-tight tracking-tight text-brand-deep">
-            Quantos dias dura o seu produto?
+            Quantos dias dura o seu produto? E quanto custa se ele acabar?
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-ink-soft">
             É a conta que o DH Gestão faz por você, o tempo todo: o estoque dividido pelo gasto médio por dia. Mexa nos
-            números e veja o alerta mudar.
+            números do seu pátio e veja o alerta mudar.
+          </p>
+          <p className="mt-4 max-w-md text-ink-soft">
+            O valor em risco abaixo é uma estimativa simples: lavagens por dia × valor da lavagem × dias parados. Os
+            números são seus, o app não inventa nenhum.
           </p>
         </div>
 
@@ -258,6 +277,22 @@ function Calculator() {
               <div className={`h-full rounded-full transition-[width] duration-300 ${text.fill}`} style={{ width: `${fill}%` }} />
             </div>
             <p className="mt-3 text-ink-soft">{text.hint}</p>
+          </div>
+
+          <div className="mt-8 border-t border-line pt-6">
+            <h3 className="font-display text-lg font-bold text-brand-deep">E se o produto faltar?</h3>
+            <div className="mt-4 space-y-6">
+              <Slider label="Valor médio de uma lavagem" unit="reais" min={20} max={300} step={5} value={ticket} onChange={setTicket} />
+              <Slider label="Dias parado por mês por falta de produto" unit="dias" min={1} max={10} step={1} value={daysWithoutProduct} onChange={setDaysWithoutProduct} />
+            </div>
+            <p className="mt-6 text-ink-soft" aria-live="polite">
+              Você deixaria de faturar cerca de
+            </p>
+            <p className="font-display text-4xl font-extrabold leading-tight text-danger">{formatBRL(atRisk)} <span className="text-lg font-bold text-ink-soft">por mês</span></p>
+            <a href={contactLink(message)} target="_blank" rel="noreferrer" className={`${cta} mt-6 w-full sm:w-auto`}>
+              <MessageCircle size={20} aria-hidden="true" /> Levar essa conta para o WhatsApp
+            </a>
+            <p className="mt-3 text-sm text-muted">Abre o WhatsApp com a conta já escrita. Você só envia.</p>
           </div>
         </div>
       </div>
@@ -356,11 +391,16 @@ function About() {
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-aqua-soft">
             O DH Gestão está em fase de ideia. Não tem login, cadastro nem planos. Abra, use como se fosse o seu pátio e
-            veja se faz sentido.
+            veja se faz sentido. Quer testar com os dados do seu lava jato? Fale com a gente.
           </p>
-          <Link to="/app" className={`${cta} mt-8`}>
-            Abrir a demonstração <ArrowRight size={20} aria-hidden="true" />
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Link to="/app" className={cta}>
+              Ver com carros de exemplo <ArrowRight size={20} aria-hidden="true" />
+            </Link>
+            <a href={contactLink(GENERIC_MESSAGE)} target="_blank" rel="noreferrer" className={ctaSecondary}>
+              <MessageCircle size={20} aria-hidden="true" /> Falar no WhatsApp
+            </a>
+          </div>
         </div>
         <ul className="space-y-5 self-center">
           {points.map((point) => (
