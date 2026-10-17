@@ -1,6 +1,15 @@
 # DH Gestão — contexto e decisões
 
-Estado em 2026-10-17. Fase atual: **0 (planejamento)**. Nada do produto foi construído ainda.
+Estado em 2026-10-17. Fases 1 a 5 do `PLANO.md` **concluídas e publicadas**.
+
+## Estado atual (implementado, testado e publicado)
+- **Site:** https://dh-gestao.doce-agenda-local.workers.dev (Cloudflare Workers Static Assets, `noindex`). Verificado no endereço real: cabeçalhos, manifest, ícones e os 22 testes de tela rodados contra o link publicado, em 360 e 1280 px.
+- **Repositório:** https://github.com/tenorio94-prog/dh-gestao-demo (privado), `main`.
+- **App:** `app/` (Vite + React + TypeScript + Tailwind, Zustand, React Router em hash). Telas: Hoje (resumo, filtros, cartões, novo agendamento, cobrança), Estoque (alertas, ajuste, pedido por WhatsApp, registrar chegada), Meu mês.
+- **Verificação:** `cd app && npm run check` = tipos + lint + 19 testes unitários + build + 22 testes de tela. Tudo verde.
+- **Deploy:** `cd app && npm run deploy`.
+- **Não feito / desvios do plano:** Codex não foi usado nesta construção (escopo pequeno, preferi escrever direto); teste de ImageGen não foi feito (logo em SVG próprio); 4 arquivos órfãos do scaffold do Vite continuam em `app/` sem versionar (`src/assets/`, `src/App.css`, `public/icons.svg`, `README.md`) porque a remoção foi bloqueada pela proteção do Claude Code. Apagar à mão.
+- **Para quem o link vai:** é público para quem tiver o endereço (sem login). O subdomínio `doce-agenda-local.workers.dev` é o da conta; trocar exigiria domínio próprio.
 
 ## Decisões tomadas
 | Decisão | Escolha | Motivo / observação |
@@ -36,10 +45,8 @@ Observação: não confirmado que o Codex CLI chamado pelo plugin compartilha as
 - Prompt do Stitch rodado; telas salvas em `stitch_dh_gest_o_car_wash/` (avaliação em `AVALIACAO.md`).
 - Nome: não verificar disponibilidade (é só projeto, sem comercialização).
 
-## Pendências (planejamento)
-- `PLANO.md` da Fase 0: posicionamento, identidade/logo, lista de telas, dados fictícios coerentes, correções do Stitch.
-- Arquitetura e estrutura de pastas; testes; repositório GitHub (privado, só com autorização); deploy Cloudflare (só com autorização).
-- Orçamento de cota por fase e divisão Sonnet/Codex/Opus; desenho do teste Sonnet-vs-Opus.
-- Teste pequeno de geração de imagem pelo Codex (ImageGen) para logo/ilustrações.
-- Roteiro de entrevista para a descoberta com donos de lava jato; roteiro de apresentação ao Marcos.
-- Decidir se o consultor Opus vira subagente (`.claude/agents/`).
+## Pendências
+- Apagar os 4 arquivos órfãos do scaffold (ver acima).
+- Opcional: testar ImageGen do Codex para ilustrações de estado vazio.
+- Fora de escopo por decisão do usuário: roteiro de entrevista, roteiro de apresentação ao Marcos, orçamento de cota, comparação Sonnet x Opus.
+- Ideias para depois, só se a demo gerar interesse: mais de um produto por serviço com custo, fechamento de caixa, histórico por cliente.

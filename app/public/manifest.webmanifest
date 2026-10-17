@@ -1,0 +1,15 @@
+{
+  "name": "DH Gestão",
+  "short_name": "DH Gestão",
+  "description": "Agenda de lavagens e estoque para lava jato (demonstração).",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0fbff",
+  "theme_color": "#006d77",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
