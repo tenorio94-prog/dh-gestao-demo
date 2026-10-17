@@ -122,6 +122,47 @@ test.describe('Hoje', () => {
     await expect(novo).toHaveAttribute('data-status', 'aguardando')
   })
 
+  test('primeiros passos: dados próprios, produto, carro e o primeiro valor', async ({ page }) => {
+    const errors = await open(page)
+    await page.getByRole('button', { name: /Começar com os meus dados/ }).click()
+    await page
+      .getByRole('dialog', { name: 'Começar com os meus dados' })
+      .getByRole('button', { name: /Saber quando o produto acaba/ })
+      .click()
+    await expect(page.getByRole('article')).toHaveCount(0)
+    const bar = page.getByRole('progressbar', { name: 'Progresso dos primeiros passos' })
+    await expect(bar).toHaveAttribute('aria-valuenow', '25')
+
+    await page.getByRole('button', { name: 'Cadastrar meu produto' }).click()
+    const product = page.getByRole('dialog', { name: 'Cadastrar produto' })
+    await expect(product.getByRole('button', { name: 'Salvar produto' })).toBeDisabled()
+    await product.getByLabel('Nome do produto').fill('Shampoo do Zé')
+    await product.getByLabel(/Quanto tem no estoque/).fill('8')
+    await product.getByRole('button', { name: 'Salvar produto' }).click()
+    await expect(bar).toHaveAttribute('aria-valuenow', '50')
+
+    await page.getByRole('button', { name: 'Registrar meu primeiro carro' }).click()
+    const sheet = page.getByRole('dialog', { name: 'Novo agendamento' })
+    await sheet.getByLabel(/Placa do veículo/).fill('zzz9y88')
+    await sheet.getByRole('button', { name: 'Corolla' }).click()
+    await sheet.getByRole('button', { name: /Confirmar agendamento/ }).click()
+    await expect(bar).toHaveAttribute('aria-valuenow', '75')
+
+    const car = page.getByRole('article', { name: /ZZZ9Y88/ })
+    await car.getByRole('button', { name: /Iniciar lavagem/ }).click()
+    await car.getByRole('button', { name: /Finalizar/ }).click()
+    await expect(page.getByRole('heading', { name: /Deu certo/ })).toBeVisible()
+    await expect(page.getByRole('link', { name: /Contar como foi/ })).toHaveAttribute('href', /wa\.me\/5581999476189/)
+
+    await page.reload()
+    await expect(page.getByRole('article', { name: /ZZZ9Y88/ })).toHaveAttribute('data-status', 'pronto')
+    await page.getByRole('button', { name: 'Entendi' }).click()
+    await expect(page.getByRole('heading', { name: /Deu certo/ })).toHaveCount(0)
+    await page.getByRole('link', { name: 'Estoque' }).click()
+    await expect(page.getByRole('article', { name: /Shampoo do Zé/ }).or(page.locator('article', { hasText: 'Shampoo do Zé' }))).toContainText('7,9 L')
+    expect(errors).toEqual([])
+  })
+
   test('os dados persistem ao recarregar e "Restaurar" volta ao exemplo', async ({ page }) => {
     await open(page)
     await page.getByRole('article', { name: /QWE5F67/ }).getByRole('button', { name: /Iniciar lavagem/ }).click()

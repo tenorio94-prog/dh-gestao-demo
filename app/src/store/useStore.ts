@@ -10,7 +10,8 @@ import {
   payAppointment,
   startWash as startAppointment,
 } from '../domain/rules'
-import type { Appointment, PayMethod, Product, Service } from '../domain/types'
+import type { Intent } from '../domain/onboarding'
+import type { Appointment, Cents, PayMethod, Product, Service } from '../domain/types'
 
 export interface NewAppointment {
   plate: string
@@ -20,6 +21,15 @@ export interface NewAppointment {
   time: string
   valueCents: number
   customerPhone?: string
+}
+
+export interface NewProduct {
+  name: string
+  containerMl: number
+  stockMl: number
+  costCentsPerContainer: Cents
+  /** ml gasto por lavagem, igual para todos os serviços (o dono refina depois em Ajustar). */
+  usageMl: number
 }
 
 /** Foto do estado antes da última ação, para o botão "Desfazer". */
@@ -38,7 +48,14 @@ interface State {
   appointments: Appointment[]
   supplierPhone: string
   seedDate: string
+  /** true depois de "Começar com os meus dados": sem exemplos e sem recomeço diário. */
+  personal: boolean
+  intent: Intent | null
+  celebrated: boolean
   undo: UndoEntry | null
+  startPersonal: (intent: Intent) => void
+  addProduct: (input: NewProduct) => void
+  dismissCelebration: () => void
   addAppointment: (input: NewAppointment) => void
   /** false quando não há box livre. */
   startWash: (id: string) => boolean
@@ -54,7 +71,7 @@ interface State {
   reset: () => void
 }
 
-const fresh = () => ({ ...buildSeed(saoPauloDay()), undo: null })
+const fresh = () => ({ ...buildSeed(saoPauloDay()), personal: false, intent: null, celebrated: false, undo: null })
 
 const remember = (s: Pick<State, 'appointments' | 'products'>, message: string): UndoEntry => ({
   id: Date.now(),
@@ -67,6 +84,37 @@ export const useStore = create<State>()(
   persist(
     (set, get) => ({
       ...fresh(),
+
+      startPersonal: (intent) =>
+        set((s) => ({
+          personal: true,
+          intent,
+          celebrated: false,
+          appointments: [],
+          products: [],
+          services: s.services.map((v) => ({ ...v, usage: {} })),
+          undo: null,
+        })),
+
+      addProduct: (input) =>
+        set((s) => {
+          const id = `p-${Date.now()}`
+          const product: Product = {
+            id,
+            name: input.name,
+            category: 'Meu produto',
+            containerMl: input.containerMl,
+            fullMl: Math.max(input.stockMl, input.containerMl),
+            stockMl: input.stockMl,
+            costCentsPerContainer: input.costCentsPerContainer,
+          }
+          return {
+            products: [...s.products, product],
+            services: s.services.map((v) => ({ ...v, usage: { ...v.usage, [id]: input.usageMl } })),
+          }
+        }),
+
+      dismissCelebration: () => set({ celebrated: true }),
 
       addAppointment: (input) =>
         set((s) => ({
@@ -155,16 +203,20 @@ export const useStore = create<State>()(
     {
       name: 'dh-gestao.v1',
       // O "Desfazer" não sobrevive ao recarregar a página.
-      partialize: ({ services, products, appointments, supplierPhone, seedDate }) => ({
+      partialize: ({ services, products, appointments, supplierPhone, seedDate, personal, intent, celebrated }) => ({
         services,
         products,
         appointments,
         supplierPhone,
         seedDate,
+        personal,
+        intent,
+        celebrated,
       }),
       // Os dados de exemplo são relativos a "hoje": se o dia mudou, gera de novo.
+      // Nos dados do próprio dono nada é apagado.
       onRehydrateStorage: () => (state) => {
-        if (state && state.seedDate !== saoPauloDay()) state.reset()
+        if (state && !state.personal && state.seedDate !== saoPauloDay()) state.reset()
       },
     },
   ),

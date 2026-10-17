@@ -1,4 +1,4 @@
-import { PackageCheck, ShoppingCart, SlidersHorizontal, TriangleAlert } from 'lucide-react'
+import { PackageCheck, Plus, ShoppingCart, SlidersHorizontal, TriangleAlert } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { saoPauloDay } from '../domain/dates'
 import { formatLiters } from '../domain/format'
@@ -7,6 +7,7 @@ import type { StockLevel } from '../domain/types'
 import { useStore } from '../store/useStore'
 import { Button } from '../ui/Button'
 import { AdjustSheet } from './AdjustSheet'
+import { ProductSheet } from './ProductSheet'
 import { RestockSheet } from './RestockSheet'
 
 const LEVEL_ORDER: Record<StockLevel, number> = { critico: 0, atencao: 1, ok: 2 }
@@ -30,6 +31,8 @@ export function Stock() {
   const receiveRestock = useStore((s) => s.receiveRestock)
   const [restocking, setRestocking] = useState<string | null>(null)
   const [adjusting, setAdjusting] = useState<string | null>(null)
+  const [adding, setAdding] = useState(false)
+  const personal = useStore((s) => s.personal)
 
   const statuses = useMemo(
     () =>
@@ -48,6 +51,11 @@ export function Stock() {
         <h1 className="text-3xl font-extrabold text-brand-deep">Estoque de produtos</h1>
         <p className="text-muted">Baixa automática a cada lavagem finalizada.</p>
       </div>
+      {personal && statuses.length > 0 && (
+        <Button variant="soft" onClick={() => setAdding(true)}>
+          <Plus aria-hidden="true" /> Cadastrar outro produto
+        </Button>
+      )}
 
       {urgent > 0 && (
         <div role="alert" className="flex items-start gap-3 rounded-2xl bg-danger-wash p-4 text-danger">
@@ -62,6 +70,14 @@ export function Stock() {
       {statuses.length === 0 && (
         <div className="rounded-3xl bg-card p-6 text-center shadow-rest">
           <p className="text-lg font-extrabold text-brand-deep">Nenhum produto cadastrado</p>
+          {personal && (
+            <>
+              <p className="mt-1 text-muted">Cadastre o primeiro para o app avisar quando ele estiver acabando.</p>
+              <Button variant="primary" big className="mt-4 w-full sm:w-auto" onClick={() => setAdding(true)}>
+                <Plus aria-hidden="true" /> Cadastrar meu produto
+              </Button>
+            </>
+          )}
         </div>
       )}
 
@@ -79,6 +95,7 @@ export function Stock() {
       </ul>
 
       {restockTarget && <RestockSheet status={restockTarget} onClose={() => setRestocking(null)} />}
+      {adding && <ProductSheet onClose={() => setAdding(false)} />}
       {adjustTarget && <AdjustSheet product={adjustTarget.product} onClose={() => setAdjusting(null)} />}
     </div>
   )

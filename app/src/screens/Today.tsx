@@ -13,6 +13,7 @@ import { STATUS_ACCENT, STATUS_LABEL } from '../ui/status'
 import { useDesktop } from '../ui/useMediaQuery'
 import { CarCard } from './CarCard'
 import { NewAppointmentSheet } from './NewAppointmentSheet'
+import { SetupCard } from './SetupCard'
 
 type Filter = 'todos' | Status
 const FILTERS: Filter[] = ['todos', ...STATUS_ORDER]
@@ -87,6 +88,8 @@ export function Today() {
               <Plus aria-hidden="true" /> Novo agendamento
             </Button>
           </header>
+
+          <SetupCard onNewAppointment={() => setCreating(true)} />
 
           <dl className="grid grid-cols-4 gap-4">
             <Tile label="Previsto no dia" note={`${summary.count} ${summary.count === 1 ? 'carro' : 'carros'}`}>
@@ -166,6 +169,8 @@ export function Today() {
               <Stat label="Em box" value={`${summary.byStatus.lavando}`} />
             </dl>
           </section>
+
+          <SetupCard onNewAppointment={() => setCreating(true)} />
 
           <Button variant="primary" big className="w-full" onClick={() => setCreating(true)}>
             <Plus aria-hidden="true" /> Novo agendamento

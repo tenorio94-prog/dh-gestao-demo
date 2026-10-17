@@ -42,3 +42,22 @@ test('acessibilidade (axe, WCAG 2.2 AA) na landing', async ({ page }) => {
   console.log(JSON.stringify(issues, null, 2))
   expect(issues).toEqual([])
 })
+
+test('acessibilidade (axe, WCAG 2.2 AA) nos primeiros passos com dados próprios', async ({ page }) => {
+  await page.setViewportSize({ width: page.viewportSize()!.width, height: 2000 })
+  const found: Record<string, string[]> = {}
+  const check = async (name: string) => {
+    const issues = await audit(page)
+    if (issues.length) found[name] = issues
+  }
+  await page.goto('/app')
+  await page.getByRole('heading', { level: 1 }).waitFor()
+  await page.getByRole('button', { name: /Começar com os meus dados/ }).click()
+  await check('Escolha da dor')
+  await page.getByRole('button', { name: /Saber quando o produto acaba/ }).click()
+  await check('Primeiros passos')
+  await page.getByRole('button', { name: 'Cadastrar meu produto' }).click()
+  await check('Cadastrar produto')
+  console.log(JSON.stringify(found, null, 2))
+  expect(found).toEqual({})
+})
