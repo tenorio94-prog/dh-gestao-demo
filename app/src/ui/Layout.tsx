@@ -125,11 +125,11 @@ function DesktopShell() {
                   <Icon size={20} aria-hidden="true" />
                   <span className="flex-1">{label}</span>
                   {badge[to] > 0 && (
-                    <span
-                      className="grid min-w-6 place-items-center rounded-full bg-coral px-1.5 text-xs font-extrabold text-ink"
-                      aria-label={to === '/app' ? `${badge[to]} para cobrar` : `${badge[to]} em nível crítico`}
-                    >
-                      {badge[to]}
+                    <span className="grid min-w-6 place-items-center rounded-full bg-coral px-1.5 text-xs font-extrabold text-ink">
+                      <span aria-hidden="true">{badge[to]}</span>
+                      <span className="sr-only">
+                        {to === '/app' ? `${badge[to]} para cobrar` : `${badge[to]} em nível crítico`}
+                      </span>
                     </span>
                   )}
                 </NavLink>

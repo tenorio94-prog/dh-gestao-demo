@@ -106,9 +106,9 @@ export function Today() {
           {noticeBox}
 
           {summary.count === 0 ? (
-            <Empty title="Nenhum carro hoje ainda" text='Clique em "Novo agendamento" para registrar o primeiro.' />
+            <Empty title="Nenhum carro hoje ainda" text='Clique em “Novo agendamento” para registrar o primeiro.' />
           ) : (
-            <div className="grid grid-cols-2 items-start gap-4 xl:grid-cols-4" aria-label="Quadro do dia">
+            <div className="grid grid-cols-2 items-start gap-4 xl:grid-cols-4" role="group" aria-label="Quadro do dia">
               {STATUS_ORDER.map((status) => {
                 const column = todays.filter((a) => a.status === status)
                 const total = column.reduce((sum, a) => sum + a.valueCents, 0)
@@ -195,7 +195,7 @@ export function Today() {
           {list.length === 0 ? (
             <Empty
               title={summary.count === 0 ? 'Nenhum carro hoje ainda' : 'Nenhum carro neste filtro'}
-              text={summary.count === 0 ? 'Toque em "Novo agendamento" para registrar o primeiro.' : 'Escolha outro status acima.'}
+              text={summary.count === 0 ? 'Toque em “Novo agendamento” para registrar o primeiro.' : 'Escolha outro status acima.'}
             />
           ) : (
             <ul className="space-y-3">

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { formatBRL } from '../domain/format'
+import { useMediaQuery } from './useMediaQuery'
 
 const DURATION_MS = 600
 
 /** Valor que rola até o novo total quando muda (confirma uma cobrança). Sem animação na 1ª tela nem com "reduzir movimento". */
 function useCountUp(target: number): number {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const reduce = useMediaQuery('(prefers-reduced-motion: reduce)')
   const [shown, setShown] = useState(target)
   const current = useRef(target)
 
@@ -33,7 +34,9 @@ export function Money({ cents }: { cents: number }) {
   const shown = useCountUp(cents)
   return (
     <>
-      <span aria-hidden="true">{formatBRL(shown)}</span>
+      <span aria-hidden="true" className="tabular-nums">
+        {formatBRL(shown)}
+      </span>
       <span className="sr-only">{formatBRL(cents)}</span>
     </>
   )

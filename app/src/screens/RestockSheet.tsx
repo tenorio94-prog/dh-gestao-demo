@@ -101,7 +101,7 @@ export function RestockSheet({ status, onClose }: { status: ProductStatus; onClo
           <Send aria-hidden="true" /> Enviar pedido via WhatsApp
         </a>
         <p className="text-center text-sm text-muted">
-          O estoque só sobe quando você tocar em "Registrar chegada", depois que o produto chegar.
+          O estoque só sobe quando você tocar em “Registrar chegada”, depois que o produto chegar.
         </p>
       </div>
     </Sheet>

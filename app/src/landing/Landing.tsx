@@ -86,7 +86,7 @@ function Hero() {
         <div className="hero-in relative mx-auto w-full max-w-xl lg:max-w-none" style={{ animationDelay: '120ms' }}>
           <BrowserFrame src="/landing/desktop-hoje.jpg" alt="Quadro do dia no computador, com os carros divididos em Aguardando, Lavando, Pronto e Pago" priority />
           <div className="absolute -bottom-10 -left-3 w-[30%] min-w-[7.5rem] sm:-left-10">
-            <PhoneFrame src="/landing/mobile-hoje.jpg" alt="Lista do dia no celular, com o carro que pede ação no topo" />
+            <PhoneFrame src="/landing/mobile-hoje.jpg" alt="Lista do dia no celular, com o carro que pede ação no topo" priority />
           </div>
         </div>
       </div>
@@ -133,10 +133,10 @@ function BrowserFrame({ src, alt, priority = false }: { src: string; alt: string
   )
 }
 
-function PhoneFrame({ src, alt, className = '' }: { src: string; alt: string; className?: string }) {
+function PhoneFrame({ src, alt, className = '', priority = false }: { src: string; alt: string; className?: string; priority?: boolean }) {
   return (
     <figure className={`overflow-hidden rounded-[1.6rem] border-[5px] border-ink bg-ink shadow-[0_24px_60px_-20px_rgb(0_0_0/0.6)] ${className}`}>
-      <img src={src} alt={alt} width={390} height={844} loading="lazy" decoding="async" className="block h-auto w-full rounded-[1.1rem]" />
+      <img src={src} alt={alt} width={390} height={844} loading={priority ? 'eager' : 'lazy'} decoding="async" className="block h-auto w-full rounded-[1.1rem]" />
     </figure>
   )
 }
@@ -243,7 +243,10 @@ function Calculator() {
             <Slider label="Gasto de produto por lavagem" unit="ml" min={40} max={250} step={10} value={mlPerWash} onChange={setMlPerWash} />
           </div>
 
-          <div className="mt-8 border-t border-line pt-6" aria-live="polite">
+          <div className="mt-8 border-t border-line pt-6">
+            <p className="sr-only" aria-live="polite">
+              Dura {days ?? 0} {days === 1 ? 'dia' : 'dias'}. {text.label}.
+            </p>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <p className="font-display text-5xl font-extrabold leading-none text-brand-deep">
                 {days ?? 0}

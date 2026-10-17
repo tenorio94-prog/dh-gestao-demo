@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useRef, useState, type KeyboardEvent } from 'react'
 import { saoPauloTime } from '../domain/dates'
 import { formatBRL, formatBRLShort, isValidPlate, normalizePlate } from '../domain/format'
 import { useStore } from '../store/useStore'
@@ -16,6 +16,18 @@ const COLORS: { name: string; swatch: string }[] = [
   { name: 'Vermelho', swatch: '#dc2626' },
   { name: 'Azul', swatch: '#1d4ed8' },
 ]
+
+/** Setas movem a seleção dentro de um radiogroup (padrão de teclado dos botões de rádio). */
+function radioKeys(event: KeyboardEvent<HTMLElement>, ids: string[], current: string, choose: (id: string) => void) {
+  const forward = event.key === 'ArrowRight' || event.key === 'ArrowDown'
+  const back = event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+  if (!forward && !back) return
+  event.preventDefault()
+  const next = ids[(ids.indexOf(current) + (forward ? 1 : ids.length - 1)) % ids.length]
+  choose(next)
+  const group = event.currentTarget
+  requestAnimationFrame(() => group.querySelector<HTMLElement>(`[data-id="${next}"]`)?.focus())
+}
 
 const chip = (active: boolean) =>
   `min-h-12 rounded-full px-4 text-sm font-bold ${active ? 'bg-brand text-white' : 'bg-card text-ink-soft ring-1 ring-line'}`
@@ -79,6 +91,7 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
             inputMode="text"
             autoCapitalize="characters"
             autoComplete="off"
+            spellCheck={false}
             placeholder="BRA2E19"
             aria-invalid={touched && !plateOk}
             aria-describedby="plate-help"
@@ -116,13 +129,20 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
               </button>
             ))}
           </div>
-          <div className="mt-3 flex flex-wrap gap-2" role="radiogroup" aria-label="Cor do carro">
+          <div
+            className="mt-3 flex flex-wrap gap-2"
+            role="radiogroup"
+            aria-label="Cor do carro"
+            onKeyDown={(e) => radioKeys(e, COLORS.map((c) => c.name), color, setColor)}
+          >
             {COLORS.map(({ name, swatch }) => (
               <button
                 key={name}
                 type="button"
                 role="radio"
                 aria-checked={color === name}
+                tabIndex={color === name ? 0 : -1}
+                data-id={name}
                 onClick={() => setColor(name)}
                 className={`flex min-h-12 items-center gap-2 rounded-full px-3 text-sm font-bold ${
                   color === name ? 'bg-brand text-white' : 'bg-card text-ink-soft ring-1 ring-line'
@@ -137,13 +157,20 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
 
         <section className="rounded-2xl bg-card p-4 shadow-rest">
           <h3 className="text-sm font-bold text-ink-soft">Serviço</h3>
-          <div className="mt-2 space-y-2" role="radiogroup" aria-label="Serviço">
+          <div
+            className="mt-2 space-y-2"
+            role="radiogroup"
+            aria-label="Serviço"
+            onKeyDown={(e) => radioKeys(e, services.map((s) => s.id), serviceId, chooseService)}
+          >
             {services.map((s) => (
               <button
                 key={s.id}
                 type="button"
                 role="radio"
                 aria-checked={serviceId === s.id}
+                tabIndex={serviceId === s.id ? 0 : -1}
+                data-id={s.id}
                 onClick={() => chooseService(s.id)}
                 className={`flex min-h-16 w-full items-center justify-between gap-3 rounded-2xl p-3 text-left ${
                   serviceId === s.id ? 'bg-aqua-wash ring-2 ring-brand' : 'bg-canvas ring-1 ring-line'
@@ -228,7 +255,7 @@ export function NewAppointmentSheet({ onClose }: { onClose: () => void }) {
             placeholder="(11) 98765-4321"
             className="mt-2 min-h-14 w-full rounded-2xl border border-line bg-canvas px-4 text-lg focus:border-brand"
           />
-          <p className="mt-2 text-sm text-muted">Com o número, o botão "Avisar" já abre a conversa com o cliente.</p>
+          <p className="mt-2 text-sm text-muted">Com o número, o botão “Avisar” já abre a conversa com o cliente.</p>
         </section>
 
         <div className="sticky bottom-0 -mx-5 bg-canvas/95 px-5 pb-1 pt-2">

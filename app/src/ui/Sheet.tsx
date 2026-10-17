@@ -56,13 +56,13 @@ export function Sheet({ title, onClose, children }: Props) {
               <Dialog.Title className="text-xl font-extrabold text-brand-deep">{title}</Dialog.Title>
               <Dialog.Close
                 aria-label="Fechar"
-                className="grid size-12 place-items-center rounded-full text-ink-soft active:bg-aqua-wash"
+                className="grid size-12 place-items-center rounded-full text-ink-soft hover:bg-aqua-wash active:bg-aqua-wash"
               >
                 <X />
               </Dialog.Close>
             </div>
           </div>
-          <div className="overflow-y-auto px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">{children}</div>
+          <div className="overflow-y-auto overscroll-contain px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">{children}</div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

@@ -263,3 +263,17 @@ test.describe('Páginas e rotas', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Estoque')
   })
 })
+
+test('setas do teclado trocam o serviço no novo agendamento', async ({ page }) => {
+  await page.goto('/app')
+  await page.getByRole('button', { name: /Novo agendamento/ }).first().click()
+  const sheet = page.getByRole('dialog', { name: 'Novo agendamento' })
+  const completa = sheet.getByRole('radio', { name: /Lavagem Completa/ })
+  await expect(completa).toHaveAttribute('aria-checked', 'true')
+  await completa.focus()
+  await page.keyboard.press('ArrowDown')
+  await expect(sheet.getByRole('radio', { name: /Lavagem do Motor/ })).toHaveAttribute('aria-checked', 'true')
+  await expect(sheet.getByRole('radio', { name: /Lavagem do Motor/ })).toBeFocused()
+  await page.keyboard.press('ArrowUp')
+  await expect(completa).toHaveAttribute('aria-checked', 'true')
+})
