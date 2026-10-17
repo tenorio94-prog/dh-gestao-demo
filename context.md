@@ -8,7 +8,7 @@ Estado em 2026-10-17. Fases 1 a 5 do `PLANO.md` **concluídas e publicadas**.
 - **App:** `app/` (Vite + React + TypeScript + Tailwind, Zustand, React Router em hash). Telas: Hoje (resumo, filtros, cartões, novo agendamento, cobrança), Estoque (alertas, ajuste, pedido por WhatsApp, registrar chegada), Meu mês.
 - **Verificação:** `cd app && npm run check` = tipos + lint + 19 testes unitários + build + 22 testes de tela. Tudo verde.
 - **Deploy:** `cd app && npm run deploy`.
-- **Não feito / desvios do plano:** Codex não foi usado nesta construção (escopo pequeno, preferi escrever direto); teste de ImageGen não foi feito (logo em SVG próprio); 4 arquivos órfãos do scaffold do Vite continuam em `app/` sem versionar (`src/assets/`, `src/App.css`, `public/icons.svg`, `README.md`) porque a remoção foi bloqueada pela proteção do Claude Code. Apagar à mão.
+- **Não feito / desvios do plano:** Codex não foi usado nesta construção (escopo pequeno, preferi escrever direto); teste de ImageGen não foi feito (logo em SVG próprio); os arquivos órfãos do scaffold do Vite (`app/README.md`, `app/public/icons.svg`) e `.tmp-scripts/` foram apagados em 2026-10-17 (`src/assets/` e `src/App.css` já não existiam).
 - **Para quem o link vai (a landing também é pública, com noindex):** é público para quem tiver o endereço (sem login). O subdomínio `doce-agenda-local.workers.dev` é o da conta; trocar exigiria domínio próprio.
 
 ## Decisões tomadas
@@ -73,7 +73,7 @@ Observação: não confirmado que o Codex CLI chamado pelo plugin compartilha as
 - Nome: não verificar disponibilidade (é só projeto, sem comercialização).
 
 ## Pendências
-- Apagar os 4 arquivos órfãos do scaffold (ver acima).
+- Plano de conversão novo em `PLANO-CONVERSAO.md` (skill `revenue-centric-design` instalada em `.claude/skills/`). Aguarda decisões do usuário: quem paga (lava jato, indústria ou híbrido), dor principal e WhatsApp de contato. Nada disso foi implementado.
 - Opcional: testar ImageGen do Codex para ilustrações de estado vazio.
 - Fora de escopo por decisão do usuário: roteiro de entrevista, roteiro de apresentação ao Marcos, orçamento de cota, comparação Sonnet x Opus.
 - Ideias para depois, só se a demo gerar interesse: mais de um produto por serviço com custo, fechamento de caixa, histórico por cliente.
