@@ -3,7 +3,7 @@
 Estado em 2026-10-17. Fases 1 a 5 do `PLANO.md` **concluídas e publicadas**.
 
 ## Estado atual (implementado, testado e publicado)
-- **Site:** https://dh-gestao.doce-agenda-local.workers.dev (Cloudflare Workers Static Assets, `noindex`). Verificado no endereço real: cabeçalhos, manifest, ícones e os 22 testes de tela rodados contra o link publicado, em 360 e 1280 px.
+- **Site:** https://dhgest.lucast.app (domínio do usuário `lucast.app`, no DNS da Cloudflare; ligado em 2026-10-17 por `routes` com `custom_domain` no `wrangler.jsonc`) e, mantido ligado de propósito (`workers_dev: true`), o endereço antigo https://dh-gestao.doce-agenda-local.workers.dev que o Marcos já recebeu. Cloudflare Workers Static Assets, `noindex`. Verificado no endereço real: cabeçalhos, manifest, ícones e os 22 testes de tela rodados contra o link publicado, em 360 e 1280 px.
 - **Repositório:** https://github.com/tenorio94-prog/dh-gestao-demo (privado), `main`.
 - **App:** `app/` (Vite + React + TypeScript + Tailwind, Zustand, React Router em hash). Telas: Hoje (resumo, filtros, cartões, novo agendamento, cobrança), Estoque (alertas, ajuste, pedido por WhatsApp, registrar chegada), Meu mês.
 - **Verificação:** `cd app && npm run check` = tipos + lint + 19 testes unitários + build + 22 testes de tela. Tudo verde.
